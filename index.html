@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Ethos AI | Entrar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="js/tw-config.js"></script>
+<link rel="stylesheet" href="css/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="font-body-md text-on-surface bg-background">
+
+<div id="login-screen">
+  <div style="position:absolute;inset:0;background-image:radial-gradient(#d2e8d4 0.5px,transparent 0.5px);background-size:28px 28px;opacity:0.4;pointer-events:none"></div>
+  <div class="login-card">
+    <div style="width:56px;height:56px;border-radius:18px;background:#182a1d;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem">
+      <span class="material-symbols-outlined" style="color:#d2e8d4;font-size:28px">auto_awesome</span>
+    </div>
+    <h1 style="font-family:'Hanken Grotesk';font-size:26px;font-weight:700;color:#182a1d;margin-bottom:0.4rem;letter-spacing:-0.02em">Ethos AI</h1>
+    <p style="font-family:Inter;font-size:14px;color:#737872;margin-bottom:2.5rem;line-height:1.5">Pesquisa profunda com saberes<br>ancestrais e design decolonial</p>
+    <div id="g-signin-btn" style="display:flex;justify-content:center;min-height:44px;align-items:center">
+      <div style="font-family:Inter;font-size:13px;color:#c3c8c1">Carregando...</div>
+    </div>
+    <p style="font-family:Inter;font-size:11px;color:#c3c8c1;margin-top:2rem;line-height:1.6">
+      Seus dados ficam salvos localmente no seu navegador.
+    </p>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script>initLoginPage();</script>
+</body>
+</html>

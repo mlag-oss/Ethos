@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/chat", "dest": "/chat.html" },
+    { "src": "/synthesis", "dest": "/synthesis.html" },
+    { "src": "/synthesis-detail", "dest": "/synthesis-detail.html" },
+    { "src": "/graph", "dest": "/graph.html" },
+    { "src": "/", "dest": "/index.html" }
+  ]
+}

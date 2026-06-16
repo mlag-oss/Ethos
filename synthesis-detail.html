@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Ethos AI | Estudo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="js/tw-config.js"></script>
+<link rel="stylesheet" href="css/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+</head>
+<body class="font-body-md text-on-surface bg-background">
+
+<aside id="sidebar" class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low shadow-sm flex flex-col py-8 px-4 z-50"></aside>
+<header id="main-header" class="main-header fixed top-0 right-0 left-64 flex justify-between items-center bg-surface/80 backdrop-blur-md px-8 py-4 z-40 border-b border-surface-container-high/60"></header>
+
+<main class="ml-64 pt-[72px] min-h-screen" id="main-content">
+  <div class="p-8 max-w-5xl mx-auto w-full page-pad" style="overflow-y:auto">
+    <button onclick="location.href='/synthesis'" class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors mb-6 font-label-md text-sm">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span> Voltar para Sínteses
+    </button>
+    <div class="mb-8" id="synthesis-detail-header"></div>
+    <div id="study-canvas-container" class="relative h-[460px] w-full rounded-[40px] bg-white border border-surface-container-high overflow-hidden canvas-bg shadow-sm mb-8"></div>
+    <div id="synthesis-content-area"></div>
+  </div>
+</main>
+
+<!-- SILENCE OVERLAY -->
+<div id="silence-overlay">
+  <p style="font-family:Inter;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:#737872;margin-bottom:1.5rem">◉ Modo Silêncio</p>
+  <p id="silence-quote" style="font-family:'Hanken Grotesk';font-size:clamp(1.2rem,3vw,2rem);color:#182a1d;max-width:540px;line-height:1.5;font-style:italic;margin-bottom:2rem">"Há saberes que não podem ser escritos, ouvidos ou sintetizados. Observe o que está ao seu redor antes de pedir uma resposta."</p>
+  <div id="silence-timer" style="font-family:Inter;font-size:3rem;font-weight:600;color:#94492d;opacity:0.6;margin-bottom:0.5rem">0:30</div>
+  <p style="font-family:Inter;font-size:12px;color:#737872;margin-bottom:2rem">aguarde o silêncio completar</p>
+  <button id="silence-close-btn" onclick="closeSilence()" style="display:none;background:transparent;border:1px solid #c3c8c1;color:#434843;padding:0.6rem 1.5rem;border-radius:100px;font-size:13px;cursor:pointer;font-family:Inter;">encerrar silêncio</button>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/synthesis-detail.js"></script>
+<script>initSynthesisDetailPage();</script>
+</body>
+</html>

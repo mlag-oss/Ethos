@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Ethos AI | Pesquisa Profunda</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#182a1d",
+        "on-primary-fixed-variant": "#384b3d",
+        "surface-bright": "#fbf9f5",
+        "inverse-surface": "#30312e",
+        "outline-variant": "#c3c8c1",
+        "on-primary": "#ffffff",
+        "tertiary": "#28261f",
+        "inverse-on-surface": "#f2f0ed",
+        "surface-tint": "#4f6354",
+        "inverse-primary": "#b6ccb9",
+        "outline": "#737872",
+        "surface-container-lowest": "#ffffff",
+        "on-tertiary-container": "#aba69b",
+        "tertiary-fixed-dim": "#cbc6ba",
+        "on-primary-container": "#96ab99",
+        "on-primary-fixed": "#0d1f13",
+        "tertiary-container": "#3f3c33",
+        "surface-container-highest": "#e4e2de",
+        "primary-container": "#2d4032",
+        "surface-container-high": "#eae8e4",
+        "on-secondary-fixed": "#380d00",
+        "on-error-container": "#93000a",
+        "secondary-fixed": "#ffdbcf",
+        "surface-dim": "#dbdad6",
+        "secondary": "#94492d",
+        "on-secondary-fixed-variant": "#763318",
+        "secondary-container": "#fd9e7b",
+        "surface-container-low": "#f5f3ef",
+        "on-surface": "#1b1c1a",
+        "surface-variant": "#e4e2de",
+        "tertiary-fixed": "#e8e2d6",
+        "on-tertiary-fixed": "#1e1c14",
+        "on-error": "#ffffff",
+        "secondary-fixed-dim": "#ffb59b",
+        "error": "#ba1a1a",
+        "on-surface-variant": "#434843",
+        "on-tertiary-fixed-variant": "#4a473e",
+        "on-secondary": "#ffffff",
+        "surface": "#fbf9f5",
+        "on-background": "#1b1c1a",
+        "primary-fixed-dim": "#b6ccb9",
+        "on-tertiary": "#ffffff",
+        "background": "#fbf9f5",
+        "on-secondary-container": "#773319",
+        "primary-fixed": "#d2e8d4",
+        "surface-container": "#efeeea",
+        "error-container": "#ffdad6"
+      },
+      borderRadius: {
+        "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"
+      },
+      spacing: {
+        "base": "8px", "margin-desktop": "64px", "margin-mobile": "16px",
+        "gutter": "24px", "xs": "4px", "xl": "80px", "md": "24px", "sm": "12px", "lg": "48px"
+      },
+      fontFamily: {
+        "headline-lg-mobile": ["Hanken Grotesk"], "label-md": ["Inter"],
+        "body-lg": ["Inter"], "headline-md": ["Hanken Grotesk"],
+        "headline-lg": ["Hanken Grotesk"], "body-md": ["Inter"],
+        "display-lg": ["Hanken Grotesk"], "label-sm": ["Inter"]
+      },
+      fontSize: {
+        "headline-lg-mobile": ["24px", {"lineHeight":"32px","fontWeight":"500"}],
+        "label-md": ["14px", {"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"500"}],
+        "body-lg": ["18px", {"lineHeight":"28px","fontWeight":"400"}],
+        "headline-md": ["24px", {"lineHeight":"32px","fontWeight":"500"}],
+        "headline-lg": ["32px", {"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"500"}],
+        "body-md": ["16px", {"lineHeight":"24px","fontWeight":"400"}],
+        "display-lg": ["48px", {"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"600"}],
+        "label-sm": ["12px", {"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"600"}]
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { background-color: #FDFBF7; color: #1b1c1a; overflow-x: hidden; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .pulse-animation { animation: pulse-ring 3s cubic-bezier(0.4,0,0.6,1) infinite; }
+  @keyframes pulse-ring {
+    0% { transform: scale(0.95); opacity: 0.5; }
+    50% { transform: scale(1.05); opacity: 0.3; }
+    100% { transform: scale(0.95); opacity: 0.5; }
+  }
+  .glass-blur { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .msg-enter { animation: fadeSlideUp 0.5s ease forwards; }
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .thinking-dot { animation: blink 1.4s infinite; }
+  .thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+  .thinking-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%,60%,100% { opacity:0.2; transform:translateY(0); } 30% { opacity:1; transform:translateY(-4px); } }
+  .active-nav { border-right: 2px solid #182a1d; background-color: #eae8e4; font-weight: 700; color: #182a1d; }
+  /* Canvas dotted bg */
+  .canvas-bg { background-image: radial-gradient(#d2e8d4 0.5px, transparent 0.5px); background-size: 24px 24px; }
+  /* Scrollbar */
+  #chat-container::-webkit-scrollbar { width: 4px; }
+  #chat-container::-webkit-scrollbar-thumb { background: #c3c8c1; border-radius: 8px; }
+  /* Markdown dentro das respostas */
+  .ai-prose p { margin-bottom: 0.75rem; }
+  .ai-prose strong { font-weight: 600; }
+  .ai-prose em { font-style: italic; color: #94492d; }
+  .ai-prose ul { list-style: disc; padding-left: 1.2rem; margin-bottom: 0.75rem; }
+  .ai-prose ol { list-style: decimal; padding-left: 1.2rem; margin-bottom: 0.75rem; }
+  .ai-prose li { margin-bottom: 0.3rem; }
+  .ai-prose blockquote { border-left: 3px solid #fd9e7b; padding-left: 1rem; color: #434843; font-style: italic; margin: 0.75rem 0; }
+  .ai-prose h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #182a1d; }
+  /* View toggle */
+  .view-panel { display: none; }
+  .view-panel.active { display: flex; }
+  /* Node hover */
+  .node { transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; }
+  .node:hover { transform: scale(1.08); }
+  .flow-line { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: flow 8s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: 0; } }
+  .node-pulse { animation: npulse 4s ease-in-out infinite; }
+  @keyframes npulse {
+    0%,100% { filter: drop-shadow(0 0 4px rgba(45,64,50,0.2)); }
+    50% { filter: drop-shadow(0 0 12px rgba(148,73,45,0.4)); }
+  }
+  /* chat split layout */
+  #view-chat { flex-direction: row !important; }
+  #conv-history-col {
+    width: 260px; flex-shrink: 0;
+    border-right: 1px solid #eae8e4;
+    display: flex; flex-direction: column;
+    height: calc(100vh - 72px); position: sticky; top: 0;
+    background: transparent;
+  }
+  #chat-main-col {
+    flex: 1; display: flex; flex-direction: column;
+    height: calc(100vh - 72px); position: relative; overflow: hidden;
+  }
+  #chat-messages-scroll {
+    flex: 1; overflow-y: auto; padding: 2rem 2rem 0;
+  }
+  #chat-messages-scroll::-webkit-scrollbar { width: 4px; }
+  #chat-messages-scroll::-webkit-scrollbar-thumb { background: #c3c8c1; border-radius: 8px; }
+  #chat-input-area {
+    padding: 1rem 2rem 1.5rem;
+    background: linear-gradient(to top, #FDFBF7 80%, transparent);
+    flex-shrink: 0;
+  }
+  .hist-item { transition: background 0.2s; cursor: pointer; border-radius: 10px; }
+  .hist-item:hover { background: #f5f3ef; }
+  .hist-item.active-conv { background: #eae8e4; border-left: 2px solid #182a1d; border-radius: 0 10px 10px 0; }
+  /* ── RESPONSIVO ── */
+  @media (max-width: 768px) {
+    /* Sidebar oculta, aparece com hamburger */
+    aside#sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 200;
+    }
+    aside#sidebar.open { transform: translateX(0); }
+
+    /* Overlay ao abrir sidebar */
+    aside#sidebar.open::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: rgba(24,42,29,0.4);
+      z-index: -1;
+    }
+
+    /* Layout principal sem margem da sidebar */
+    main#main-content { margin-left: 0 !important; }
+    header.main-header { left: 0 !important; padding: 0.75rem 1rem !important; }
+
+    /* Header: esconde itens secundários */
+    #view-title { font-size: 1rem !important; }
+
+    /* Chat: empilha as colunas, esconde histórico */
+    #view-chat { flex-direction: column !important; }
+    #conv-history-col { display: none !important; }
+    #chat-main-col { height: calc(100vh - 60px); }
+    #chat-messages-scroll { padding: 1rem 1rem 0; }
+    #chat-input-area { padding: 0.75rem 1rem 1rem; }
+
+    /* Views com padding menor */
+    #view-synthesis,
+    #view-synthesis-detail,
+    #view-graph { padding: 1.25rem !important; }
+
+    /* Canvas menor em mobile */
+    #study-canvas-container { height: 280px !important; }
+
+    /* Tipografia menor */
+    .text-5xl, .text-4xl { font-size: 1.75rem !important; }
+    .text-3xl { font-size: 1.4rem !important; }
+
+    /* Cards em coluna única */
+    .md\:grid-cols-3 { grid-template-columns: 1fr !important; }
+    .md\:col-span-2 { grid-column: span 1 !important; }
+
+    /* Sugestões em coluna única */
+    #suggestions-area .grid { grid-template-columns: 1fr !important; }
+
+    /* Insight cards padding menor */
+    .rounded-\[28px\] { padding: 1.25rem !important; }
+
+    /* Input de chat */
+    #chat-input { font-size: 15px !important; }
+  }
+  /* Login screen */
+  #login-screen {
+    position: fixed; inset: 0; z-index: 500;
+    background: #FDFBF7;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  #login-screen.hidden { display: none; }
+  .login-card {
+    background: #fff;
+    border: 1px solid #eae8e4;
+    border-radius: 32px;
+    padding: 3rem 2.5rem;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 8px 48px rgba(24,42,29,0.07);
+    text-align: center;
+  }
+  .google-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 13px 20px;
+    background: #fff; border: 1.5px solid #c3c8c1;
+    border-radius: 12px; cursor: pointer;
+    font-family: Inter; font-size: 15px; font-weight: 500; color: #1b1c1a;
+    transition: all 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .google-btn:hover { border-color: #182a1d; box-shadow: 0 4px 16px rgba(24,42,29,0.1); transform: translateY(-1px); }
+  .google-btn:active { transform: scale(0.98); }
+  /* #client-id-setup is controlled via inline style (display:none / display:flex) */
+  /* Silence mode */
+  #silence-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(253,251,247,0.97);
+    z-index: 200; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem;
+  }
+  #silence-overlay.active { display: flex; }
+
+  /* Drawer de histórico mobile */
+  #mobile-history-drawer {
+    display: none;
+    position: fixed; inset: 0; z-index: 180;
+  }
+  #mobile-history-drawer.open { display: flex; flex-direction: column; }
+  #mobile-history-drawer .drawer-panel {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 85%; max-width: 320px;
+    background: #FDFBF7; display: flex; flex-direction: column;
+    box-shadow: 4px 0 24px rgba(24,42,29,0.12);
+  }
+  #mobile-history-drawer .drawer-overlay {
+    position: absolute; inset: 0; background: rgba(24,42,29,0.4);
+  }
+</style>
+</head>
+<body class="font-body-md text-on-surface bg-background">
+
+<!-- SIDEBAR -->
+<aside id="sidebar" class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low shadow-sm flex flex-col py-8 px-4 z-50">
+  <div class="mb-10 px-2">
+    <h1 class="font-headline-md text-headline-md text-primary tracking-tight">Ethos AI</h1>
+    <p class="font-label-sm text-label-sm text-on-surface-variant opacity-60">Modo de Pesquisa Profunda</p>
+  </div>
+  <nav class="flex-1 space-y-2">
+    <a onclick="handleChatNav()" class="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-surface-container-high transition-colors font-label-md text-label-md text-on-surface-variant cursor-pointer" id="nav-chat">
+      <span class="material-symbols-outlined">forum</span>
+      <span>Conversas</span>
+      <span id="hist-count" style="margin-left:auto;font-size:11px;background:#eae8e4;color:#434843;padding:1px 7px;border-radius:100px;display:none">0</span>
+    </a>
+    <a onclick="setView('synthesis')" class="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-surface-container-high transition-colors font-label-md text-label-md text-on-surface-variant cursor-pointer" id="nav-synthesis">
+      <span class="material-symbols-outlined">hub</span>
+      <span>Sínteses Ethos</span>
+    </a>
+    <a onclick="setView('graph')" class="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-surface-container-high transition-colors font-label-md text-label-md text-on-surface-variant cursor-pointer" id="nav-graph">
+      <span class="material-symbols-outlined">account_tree</span>
+      <span>Grafo de Conhecimento</span>
+    </a>
+  </nav>
+  <div class="mt-auto pt-6 border-t border-outline-variant/30">
+    <div class="flex items-center gap-3 px-2 mt-2">
+      <div class="user-avatar w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-label-md font-bold flex-shrink-0 overflow-hidden">MA</div>
+      <div class="overflow-hidden flex-1">
+        <p class="user-name font-label-md text-label-md truncate text-primary">Maria Luíza</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant opacity-70">Pesquisadora</p>
+      </div>
+      <button onclick="signOut()" title="Sair" class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-error transition-colors flex-shrink-0">
+        <span class="material-symbols-outlined text-[18px]">logout</span>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<!-- TOP BAR -->
+<header class="main-header fixed top-0 right-0 left-64 flex justify-between items-center bg-surface/80 backdrop-blur-md px-8 py-4 z-40 border-b border-surface-container-high/60">
+  <div class="flex items-center gap-4">
+    <button class="md:hidden material-symbols-outlined text-primary" onclick="document.getElementById('sidebar').classList.toggle('open')">menu</button>
+    <h2 class="font-headline-md text-headline-md text-primary" id="view-title">Santuário de Pesquisa Ethos</h2>
+    <div class="h-4 w-px bg-outline-variant mx-2 hidden md:block"></div>
+    <span class="font-label-md text-label-md text-secondary hidden md:block" id="view-subtitle">A Era do Curupira</span>
+  </div>
+  <div class="flex items-center gap-4">
+    <div class="relative">
+      <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-[18px]">search</span>
+      <input id="search-input" class="bg-surface-container-low border-none rounded-full pl-9 pr-4 py-2 w-48 font-label-md focus:ring-2 focus:ring-secondary transition-all text-sm hidden md:block" placeholder="Buscar insights..." type="text">
+    </div>
+    <button onclick="activateSilence()" title="Modo Silêncio" class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-surface-container-high transition-colors text-on-surface-variant hover:text-secondary" >
+      <span class="material-symbols-outlined text-[20px]">do_not_disturb_on</span>
+    </button>
+    <div class="user-avatar w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-sm overflow-hidden">MA</div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="ml-64 pt-20 min-h-screen" id="main-content">
+
+  <!-- VIEW: CHAT -->
+  <div id="view-chat" class="view-panel active">
+
+    <!-- COLUNA ESQUERDA: histórico -->
+    <div id="conv-history-col">
+      <div style="padding:1.25rem 1rem 0.75rem">
+        <p style="font-family:'Hanken Grotesk';font-size:14px;font-weight:600;color:#182a1d">Conversas</p>
+      </div>
+      <div id="history-list" style="flex:1;overflow-y:auto;padding:0.5rem">
+        <p id="history-empty" style="font-family:Inter;font-size:12px;color:#737872;text-align:center;padding:2rem 1rem;line-height:1.6">Nenhuma conversa ainda.<br>Inicie um estudo para começar.</p>
+      </div>
+      <div style="padding:0.75rem;border-top:1px solid #eae8e4">
+        <button onclick="newConversation()" style="width:100%;padding:8px 12px;border-radius:10px;border:1px dashed #c3c8c1;background:transparent;cursor:pointer;font-family:Inter;font-size:12px;color:#737872;display:flex;align-items:center;justify-content:center;gap:5px;transition:all 0.2s" onmouseover="this.style.background='#f5f3ef';this.style.borderColor='#182a1d';this.style.color='#182a1d'" onmouseout="this.style.background='transparent';this.style.borderColor='#c3c8c1';this.style.color='#737872'">
+          <span class="material-symbols-outlined" style="font-size:15px">add</span> Nova conversa
+        </button>
+      </div>
+    </div>
+
+    <!-- COLUNA DIREITA: chat -->
+    <div id="chat-main-col">
+      <div id="chat-messages-scroll">
+        <!-- Sugestões iniciais -->
+        <div id="suggestions-area" class="mb-10" style="max-width:640px;margin-left:auto;margin-right:auto">
+          <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-6 opacity-70">Como posso ajudar sua pesquisa?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button onclick="sendSuggestion(this)" class="text-left p-4 bg-white rounded-2xl border border-surface-container-high hover:border-secondary/40 hover:shadow-md transition-all text-on-surface-variant text-sm">
+              <span class="material-symbols-outlined text-secondary text-[18px] block mb-2">eco</span>
+              Como pesquisar com comunidades indígenas de forma não-extrativista?
+            </button>
+            <button onclick="sendSuggestion(this)" class="text-left p-4 bg-white rounded-2xl border border-surface-container-high hover:border-secondary/40 hover:shadow-md transition-all text-on-surface-variant text-sm">
+              <span class="material-symbols-outlined text-secondary text-[18px] block mb-2">history_edu</span>
+              Qual a diferença entre se inspirar em saberes ancestrais e extraí-los?
+            </button>
+            <button onclick="sendSuggestion(this)" class="text-left p-4 bg-white rounded-2xl border border-surface-container-high hover:border-secondary/40 hover:shadow-md transition-all text-on-surface-variant text-sm">
+              <span class="material-symbols-outlined text-secondary text-[18px] block mb-2">person_search</span>
+              Como validar soluções de design sem impor minha visão ao usuário?
+            </button>
+            <button onclick="sendSuggestion(this)" class="text-left p-4 bg-white rounded-2xl border border-surface-container-high hover:border-secondary/40 hover:shadow-md transition-all text-on-surface-variant text-sm">
+              <span class="material-symbols-outlined text-secondary text-[18px] block mb-2">psychology</span>
+              O que significa design decolonial na prática?
+            </button>
+          </div>
+        </div>
+        <!-- Messages -->
+        <div id="chat-container" class="space-y-8" style="max-width:640px;margin:0 auto;padding-bottom:1rem"></div>
+        <div id="thinking-indicator" class="hidden items-center gap-3 py-4" style="max-width:640px;margin:0 auto">
+          <span class="material-symbols-outlined text-primary text-[20px]">auto_awesome</span>
+          <div class="flex gap-1.5">
+            <span class="thinking-dot w-2 h-2 rounded-full bg-primary-container inline-block"></span>
+            <span class="thinking-dot w-2 h-2 rounded-full bg-primary-container inline-block"></span>
+            <span class="thinking-dot w-2 h-2 rounded-full bg-primary-container inline-block"></span>
+          </div>
+        </div>
+        <div style="height:6rem"></div>
+      </div>
+
+      <!-- Input dentro da coluna -->
+      <div id="chat-input-area">
+        <div style="max-width:640px;margin:0 auto">
+          <div class="relative flex items-center gap-3 bg-white/60 glass-blur p-2 rounded-[28px] border border-white/60 shadow-lg">
+            <div class="relative flex-shrink-0">
+              <div id="pulse-ring" class="absolute inset-0 bg-secondary/10 rounded-full pulse-animation hidden"></div>
+              <button id="voice-btn" onclick="toggleVoice()" title="Gravar voz" class="relative w-11 h-11 bg-secondary text-white rounded-full flex items-center justify-center hover:bg-on-secondary-fixed-variant transition-colors shadow-md active:scale-95">
+                <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1">mic</span>
+              </button>
+            </div>
+            <div class="flex-1" style="display:flex;align-items:center">
+              <textarea id="chat-input" class="w-full bg-transparent border-none focus:ring-0 text-body-md font-body-md placeholder:text-outline/50 resize-none px-2 max-h-40 overflow-y-auto" oninput="this.style.height='';this.style.height=this.scrollHeight+'px'" placeholder="Contemple seu próximo nó de pesquisa..." rows="1" style="height:auto;line-height:1.5;padding-top:0;padding-bottom:0;"></textarea>
+            </div>
+            <button onclick="sendMessage()" class="w-11 h-11 flex items-center justify-center bg-primary text-white rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]">send</span>
+            </button>
+          </div>
+          <div class="flex justify-center gap-8 mt-3">
+            <button id="btn-foco" onclick="toggleFoco()" title="Respostas mais longas e detalhadas" class="flex items-center gap-1.5 transition-all opacity-40 hover:opacity-80 cursor-pointer bg-transparent border-none px-0 py-0">
+              <span id="dot-foco" class="w-1.5 h-1.5 bg-primary rounded-full inline-block transition-all"></span>
+              <span class="font-label-sm text-[10px] uppercase tracking-tight text-primary">Foco Profundo</span>
+            </button>
+            <div class="flex items-center gap-1.5 opacity-40">
+              <span class="w-1.5 h-1.5 bg-secondary rounded-full"></span>
+              <span class="font-label-sm text-[10px] uppercase tracking-tight" id="voice-status-label">Voz</span>
+            </div>
+            <button id="btn-prov" onclick="toggleProvocacao()" title="IA mais desafiadora e crítica" class="flex items-center gap-1.5 transition-all opacity-40 hover:opacity-80 cursor-pointer bg-transparent border-none px-0 py-0">
+              <span id="dot-prov" class="w-1.5 h-1.5 bg-outline rounded-full inline-block transition-all"></span>
+              <span class="font-label-sm text-[10px] uppercase tracking-tight text-on-surface-variant">Modo Provocação</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- VIEW: SYNTHESIS LIST -->
+  <div id="view-synthesis" class="view-panel flex-col p-8 max-w-4xl mx-auto w-full" style="overflow-y:auto">
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        <span class="font-label-sm text-secondary tracking-widest block mb-1">SÍNTESES ETHOS</span>
+        <h3 class="text-3xl font-bold text-primary" style="letter-spacing:-0.02em">Estudos e Projetos</h3>
+      </div>
+      <button onclick="createNewStudy()" class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl font-label-md text-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
+        <span class="material-symbols-outlined text-[18px]">add</span> Novo estudo
+      </button>
+    </div>
+    <div class="space-y-3" id="synthesis-list">
+      <!-- Preenchido dinamicamente pelo JS -->
+    </div>
+    <!-- Estado vazio -->
+    <div id="synthesis-empty" class="flex flex-col items-center justify-center py-20 text-center" style="display:none!important">
+      <span class="material-symbols-outlined text-[56px] text-primary-container opacity-40 mb-4">hub</span>
+      <h4 class="font-headline-md text-xl text-primary mb-2">Nenhum estudo ainda</h4>
+      <p class="text-on-surface-variant max-w-sm text-sm leading-relaxed mb-6">Crie seu primeiro estudo para organizar suas pesquisas, sínteses e descobertas do projeto.</p>
+      <button onclick="createNewStudy()" class="px-5 py-2.5 bg-primary text-white rounded-xl font-label-md text-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
+        Criar primeiro estudo
+      </button>
+    </div>
+  </div>
+
+  <!-- VIEW: SYNTHESIS DETAIL -->
+  <div id="view-synthesis-detail" class="view-panel flex-col p-8 max-w-5xl mx-auto w-full" style="overflow-y:auto">
+    <button onclick="setView('synthesis')" class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors mb-6 font-label-md text-sm">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span> Voltar para Sínteses
+    </button>
+    <div class="mb-8" id="synthesis-detail-header">
+      <!-- preenchido por openSynthesisDetail() -->
+    </div>
+    <!-- Canvas: dinâmico por estudo -->
+    <div id="study-canvas-container" class="relative h-[460px] w-full rounded-[40px] bg-white border border-surface-container-high overflow-hidden canvas-bg shadow-sm mb-8"></div>
+    <!-- Conteúdo de síntese: dinâmico -->
+    <div id="synthesis-content-area"></div>
+  </div>
+
+  <!-- VIEW: GRAPH -->
+  <div id="view-graph" class="view-panel flex-col p-8" style="overflow-y:auto">
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <span class="font-label-sm text-secondary tracking-widest block mb-1">GRAFO DE CONHECIMENTO</span>
+        <h3 class="text-3xl font-bold text-primary" style="letter-spacing:-0.02em">Conexões Emergentes</h3>
+      </div>
+      <button onclick="buildKnowledgeGraph()" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-xl font-label-md text-sm text-on-surface-variant hover:bg-surface-container-high transition-colors">
+        <span class="material-symbols-outlined text-[16px]">refresh</span> Atualizar
+      </button>
+    </div>
+    <div class="bg-white rounded-[32px] border border-surface-container-high shadow-sm overflow-hidden mb-6" style="height:420px">
+      <canvas id="knowledge-canvas" style="width:100%;height:100%;display:block;cursor:pointer"></canvas>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-white p-5 rounded-2xl border border-surface-container-high">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="material-symbols-outlined text-primary text-[18px]">hub</span>
+          <span class="font-label-md text-sm font-semibold text-primary">Nós</span>
+        </div>
+        <p class="text-3xl font-bold text-primary" id="graph-node-count">—</p>
+        <p class="text-on-surface-variant text-xs mt-1">conceitos mapeados</p>
+      </div>
+      <div class="bg-white p-5 rounded-2xl border border-surface-container-high">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="material-symbols-outlined text-secondary text-[18px]">forum</span>
+          <span class="font-label-md text-sm font-semibold text-primary">Conversas</span>
+        </div>
+        <p class="text-3xl font-bold text-primary" id="graph-conv-count">—</p>
+        <p class="text-on-surface-variant text-xs mt-1">sessões de pesquisa</p>
+      </div>
+      <div class="bg-white p-5 rounded-2xl border border-surface-container-high">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="material-symbols-outlined text-[18px]" style="color:#4f6354">link</span>
+          <span class="font-label-md text-sm font-semibold text-primary">Conexões</span>
+        </div>
+        <p class="text-3xl font-bold text-primary" id="graph-edge-count">—</p>
+        <p class="text-on-surface-variant text-xs mt-1">relações identificadas</p>
+      </div>
+    </div>
+    <p class="text-on-surface-variant text-xs mt-4 text-center opacity-60">Clique em qualquer nó do grafo para iniciar uma conversa sobre aquele tema</p>
+  </div>
+
+</main>
+
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div style="position:absolute;inset:0;background-image:radial-gradient(#d2e8d4 0.5px,transparent 0.5px);background-size:28px 28px;opacity:0.4;pointer-events:none"></div>
+
+  <!-- Tela 1: entrada principal -->
+  <div class="login-card" id="login-main">
+    <div style="width:56px;height:56px;border-radius:18px;background:#182a1d;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem">
+      <span class="material-symbols-outlined" style="color:#d2e8d4;font-size:28px">auto_awesome</span>
+    </div>
+    <h1 style="font-family:'Hanken Grotesk';font-size:26px;font-weight:700;color:#182a1d;margin-bottom:0.4rem;letter-spacing:-0.02em">Ethos AI</h1>
+    <p style="font-family:Inter;font-size:14px;color:#737872;margin-bottom:2.5rem;line-height:1.5">Pesquisa profunda com saberes<br>ancestrais e design decolonial</p>
+
+    <div id="g-signin-btn" style="display:flex;justify-content:center;min-height:44px;align-items:center">
+      <div style="font-family:Inter;font-size:13px;color:#c3c8c1">Carregando...</div>
+    </div>
+
+    <p style="font-family:Inter;font-size:11px;color:#c3c8c1;margin-top:2rem;line-height:1.6">
+      Seus dados ficam salvos localmente no seu navegador.
+    </p>
+  </div>
+
+  <!-- Tela 2: formulário Google (simula o fluxo do Google) -->
+  <div class="login-card" id="login-google-form" style="display:none">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.5rem">
+      <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      <span style="font-family:Inter;font-size:16px;font-weight:500;color:#182a1d">Fazer login com o Google</span>
+    </div>
+    <p style="font-family:Inter;font-size:13px;color:#737872;margin-bottom:1.5rem">Para personalizar sua experiência no Ethos AI</p>
+
+    <label style="font-family:Inter;font-size:12px;color:#434843;display:block;margin-bottom:4px">Nome completo</label>
+    <input id="gf-name" type="text" placeholder="Seu nome" style="width:100%;padding:12px 16px;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:14px;background:#fff;outline:none;margin-bottom:1rem;color:#1b1c1a;box-sizing:border-box" oninput="checkGoogleForm()">
+
+    <label style="font-family:Inter;font-size:12px;color:#434843;display:block;margin-bottom:4px">E-mail Google</label>
+    <input id="gf-email" type="email" placeholder="seunome@gmail.com" style="width:100%;padding:12px 16px;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:14px;background:#fff;outline:none;margin-bottom:1.5rem;color:#1b1c1a;box-sizing:border-box" oninput="checkGoogleForm()">
+
+    <div style="display:flex;gap:10px">
+      <button id="gf-submit" onclick="submitGoogleForm()" disabled style="flex:1;padding:12px;background:#182a1d;color:#fff;border:none;border-radius:12px;font-family:Inter;font-size:14px;font-weight:500;cursor:pointer;opacity:0.4;transition:opacity 0.2s">Entrar</button>
+      <button onclick="document.getElementById('login-google-form').style.display='none';document.getElementById('login-main').style.display='block'" style="padding:12px 18px;background:transparent;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:14px;cursor:pointer;color:#434843">Voltar</button>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENT ID SETUP MODAL -->
+<div id="client-id-setup" style="display:none;position:fixed;inset:0;background:rgba(24,42,29,0.55);z-index:400;align-items:center;justify-content:center;padding:1rem;overflow-y:auto">
+  <div style="background:#FDFBF7;border-radius:28px;padding:2.5rem;max-width:540px;width:100%;box-shadow:0 24px 80px rgba(24,42,29,0.25);margin:auto">
+
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.5rem">
+      <svg width="22" height="22" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      <h3 style="font-family:'Hanken Grotesk';font-size:18px;font-weight:600;color:#182a1d">Configurar Login com Google</h3>
+    </div>
+
+    <!-- Aviso file:// -->
+    <div id="file-protocol-warning" style="display:none;background:#fff3cd;border:1px solid #ffc107;border-radius:12px;padding:12px 16px;margin-bottom:1.25rem">
+      <p style="font-family:Inter;font-size:12px;color:#856404;line-height:1.6;margin:0">
+        <strong>⚠ Arquivo aberto direto do computador</strong><br>
+        O Google bloqueia login OAuth em arquivos locais (<code>file://</code>). Você precisa servir o arquivo via servidor antes de continuar. Veja o Passo 1 abaixo.
+      </p>
+    </div>
+
+    <!-- Passo 1: hospedar -->
+    <div style="background:#f0f4f0;border-radius:14px;padding:14px 16px;margin-bottom:1rem">
+      <p style="font-family:Inter;font-size:12px;font-weight:700;color:#182a1d;margin-bottom:8px">PASSO 1 — Servir o arquivo (escolha uma opção):</p>
+      <p style="font-family:Inter;font-size:12px;color:#434843;line-height:1.8;margin:0">
+        <strong>A) Localmente</strong> — abra o Terminal e rode:<br>
+        <code style="background:#fff;padding:3px 8px;border-radius:6px;font-size:11px;display:block;margin:4px 0">cd ~/Ethos && python3 -m http.server 8080</code>
+        Depois acesse: <code style="background:#fff;padding:1px 5px;border-radius:4px;font-size:11px">http://localhost:8080/ethos-ai.html</code><br><br>
+        <strong>B) GitHub Pages (recomendado)</strong> — gratuito e permanente:<br>
+        Crie um repositório no <a href="https://github.com" target="_blank" style="color:#94492d">github.com</a>, suba o arquivo e ative o GitHub Pages em Settings → Pages.
+      </p>
+    </div>
+
+    <!-- Passo 2: OAuth Client ID -->
+    <div style="background:#f0f4f0;border-radius:14px;padding:14px 16px;margin-bottom:1.25rem">
+      <p style="font-family:Inter;font-size:12px;font-weight:700;color:#182a1d;margin-bottom:8px">PASSO 2 — Criar OAuth Client ID (gratuito):</p>
+      <ol style="font-family:Inter;font-size:12px;color:#434843;line-height:1.9;margin:0;padding-left:16px">
+        <li>Acesse <a href="https://console.cloud.google.com/apis/credentials" target="_blank" style="color:#94492d;text-decoration:underline">console.cloud.google.com/apis/credentials</a></li>
+        <li>Clique em <strong>"Criar credenciais" → "ID do cliente OAuth 2.0"</strong></li>
+        <li>Tipo: <strong>Aplicativo da Web</strong></li>
+        <li>Em "Origens JavaScript autorizadas" adicione a URL do Passo 1</li>
+        <li>Clique em Criar e copie o <strong>Client ID</strong></li>
+      </ol>
+    </div>
+
+    <label style="font-family:Inter;font-size:12px;color:#434843;display:block;margin-bottom:6px;font-weight:500">Cole o Client ID aqui:</label>
+    <input id="client-id-input" type="text" placeholder="123456789-abc...apps.googleusercontent.com" style="width:100%;padding:12px 16px;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:13px;background:#fff;outline:none;margin-bottom:1rem;color:#1b1c1a;box-sizing:border-box" oninput="const ok=this.value.trim().length>=20;const btn=document.getElementById('client-id-save');btn.disabled=!ok;btn.style.opacity=ok?'1':'0.4'">
+
+    <div style="display:flex;gap:10px">
+      <button id="client-id-save" onclick="saveClientId()" disabled style="flex:1;padding:12px;background:#182a1d;color:#fff;border:none;border-radius:12px;font-family:Inter;font-size:14px;font-weight:500;cursor:pointer;opacity:0.4;transition:opacity 0.2s">Salvar e entrar com Google</button>
+      <button onclick="closeClientIdModal()" style="padding:12px 18px;background:transparent;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:14px;cursor:pointer;color:#434843">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- KEY MODAL -->
+<div id="key-modal" style="display:none;position:fixed;inset:0;background:rgba(24,42,29,0.5);z-index:300;align-items:center;justify-content:center;padding:1rem">
+  <div style="background:#FDFBF7;border-radius:28px;padding:2.5rem;max-width:500px;width:100%;box-shadow:0 24px 80px rgba(24,42,29,0.2)">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.5rem">
+      <span class="material-symbols-outlined" style="color:#182a1d;font-size:24px">key</span>
+      <h3 style="font-family:'Hanken Grotesk';font-size:20px;font-weight:600;color:#182a1d">API Gemini</h3>
+    </div>
+
+    <!-- Passo a passo para obter a chave -->
+    <div style="background:#f0f4f0;border-radius:14px;padding:14px 16px;margin-bottom:1rem">
+      <p style="font-family:Inter;font-size:12px;font-weight:600;color:#182a1d;margin-bottom:6px">Como obter sua chave gratuita:</p>
+      <ol style="font-family:Inter;font-size:12px;color:#434843;line-height:1.8;margin:0;padding-left:16px">
+        <li>Acesse <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:#94492d;text-decoration:underline">aistudio.google.com/app/apikey</a></li>
+        <li>Clique em <strong>"Criar chave de API"</strong></li>
+        <li>Selecione um projeto existente ou crie um novo</li>
+        <li>Clique no ícone 📋 para copiar a chave gerada</li>
+        <li>Cole abaixo e clique em <strong>"Testar e salvar"</strong></li>
+      </ol>
+    </div>
+
+    <input id="key-input" type="password" placeholder="Cole sua chave aqui..." style="width:100%;padding:12px 16px;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:14px;background:#fff;outline:none;color:#1b1c1a;box-sizing:border-box;margin-bottom:0.5rem" oninput="onKeyInput(this.value)">
+
+    <div id="key-status" style="font-family:Inter;font-size:12px;margin-bottom:0.75rem;min-height:36px;padding:0 2px;line-height:1.5"></div>
+
+    <div style="margin-bottom:1rem">
+      <label style="font-family:Inter;font-size:12px;color:#737872;display:block;margin-bottom:4px">Modelo Gemini</label>
+      <select id="model-select" style="width:100%;padding:10px 16px;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:14px;background:#fff;color:#1b1c1a;outline:none">
+        <option value="gemini-2.0-flash">gemini-2.0-flash — rápido, gratuito ✓</option>
+        <option value="gemini-2.0-flash-lite">gemini-2.0-flash-lite — mais leve</option>
+        <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+        <option value="gemini-1.5-pro">gemini-1.5-pro — mais inteligente</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button onclick="testAndSaveKey()" id="key-save-btn" disabled style="flex:1;padding:12px;background:#182a1d;color:#fff;border:none;border-radius:12px;font-family:Inter;font-size:14px;font-weight:500;cursor:pointer;transition:opacity 0.2s;opacity:0.4">Testar e salvar</button>
+      <button onclick="closeKeyModal()" style="padding:12px 20px;background:transparent;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:14px;cursor:pointer;color:#434843">Fechar</button>
+    </div>
+    <p style="font-family:Inter;font-size:11px;color:#c3c8c1;margin-top:1rem;text-align:center">A chave fica salva localmente no seu navegador · uso gratuito com limite de taxa</p>
+  </div>
+</div>
+
+<!-- SILENCE OVERLAY -->
+<!-- DRAWER HISTÓRICO MOBILE -->
+<div id="mobile-history-drawer">
+  <div class="drawer-overlay" onclick="closeMobileHistory()"></div>
+  <div class="drawer-panel">
+    <div style="padding:1.25rem 1rem 0.75rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eae8e4">
+      <p style="font-family:'Hanken Grotesk';font-size:14px;font-weight:600;color:#182a1d">Conversas</p>
+      <button onclick="closeMobileHistory()" style="background:none;border:none;cursor:pointer;color:#737872">
+        <span class="material-symbols-outlined" style="font-size:20px">close</span>
+      </button>
+    </div>
+    <div id="mobile-history-list" style="flex:1;overflow-y:auto;padding:0.5rem"></div>
+    <div style="padding:0.75rem;border-top:1px solid #eae8e4">
+      <button onclick="newConversation();closeMobileHistory();" style="width:100%;padding:8px 12px;border-radius:10px;border:1px dashed #c3c8c1;background:transparent;cursor:pointer;font-family:Inter;font-size:12px;color:#737872;display:flex;align-items:center;justify-content:center;gap:5px">
+        <span class="material-symbols-outlined" style="font-size:15px">add</span> Nova conversa
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="silence-overlay">
+  <p style="font-family:Inter;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:#737872;margin-bottom:1.5rem">◉ Modo Silêncio</p>
+  <p id="silence-quote" style="font-family:'Hanken Grotesk';font-size:clamp(1.2rem,3vw,2rem);color:#182a1d;max-width:540px;line-height:1.5;font-style:italic;margin-bottom:2rem">"Há saberes que não podem ser escritos, ouvidos ou sintetizados. Observe o que está ao seu redor antes de pedir uma resposta."</p>
+  <div id="silence-timer" style="font-family:Inter;font-size:3rem;font-weight:600;color:#94492d;opacity:0.6;margin-bottom:0.5rem">0:30</div>
+  <p style="font-family:Inter;font-size:12px;color:#737872;margin-bottom:2rem">aguarde o silêncio completar</p>
+  <button id="silence-close-btn" onclick="closeSilence()" style="display:none;background:transparent;border:1px solid #c3c8c1;color:#434843;padding:0.6rem 1.5rem;border-radius:100px;font-size:13px;cursor:pointer;font-family:Inter;">encerrar silêncio</button>
+</div>
+
+<script>
+// ── AUTH ──
+let GOOGLE_CLIENT_ID = localStorage.getItem('ethos_client_id') || '196799617641-gfg5qltf4ddla5onhos5kcmdr6mel30p.apps.googleusercontent.com';
+let currentUser = JSON.parse(localStorage.getItem('ethos_user') || 'null');
+
+function initAuth() {
+  if (currentUser) { applyUser(currentUser); showApp(); return; }
+  document.getElementById('login-screen').classList.remove('hidden');
+  // Renderiza o botão oficial do Google no div reservado
+  if (GOOGLE_CLIENT_ID) {
+    const tryRender = () => {
+      try {
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleGoogleCredential,
+          auto_select: false
+        });
+        const container = document.getElementById('g-signin-btn');
+        container.innerHTML = '';
+        google.accounts.id.renderButton(container, {
+          theme: 'outline',
+          size: 'large',
+          width: 320,
+          locale: 'pt-BR',
+          text: 'signin_with'
+        });
+      } catch(e) {
+        // GSI ainda não carregou, tenta de novo
+        setTimeout(tryRender, 300);
+      }
+    };
+    setTimeout(tryRender, 200);
+  }
+}
+
+function applyUser(user) {
+  const initials = user.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+  document.querySelectorAll('.user-avatar').forEach(el => {
+    if (user.picture) {
+      el.style.padding = '0';
+      el.style.background = 'transparent';
+      el.innerHTML = `<img src="${user.picture}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block" onerror="this.parentElement.textContent='${initials}';this.parentElement.style.background=''">`;
+    } else {
+      el.textContent = initials;
+    }
+  });
+  document.querySelectorAll('.user-name').forEach(el => el.textContent = user.name);
+}
+
+function showApp() {
+  document.getElementById('login-screen').classList.add('hidden');
+}
+
+function signInWithGoogle() {
+  if (!GOOGLE_CLIENT_ID) {
+    document.getElementById('client-id-setup').style.display = 'flex';
+    return;
+  }
+  // Verifica se está em file:// (OAuth não funciona)
+  if (location.protocol === 'file:') {
+    document.getElementById('client-id-setup').style.display = 'flex';
+    document.getElementById('file-protocol-warning').style.display = 'block';
+    return;
+  }
+  try {
+    google.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: handleGoogleCredential,
+      auto_select: false,
+      cancel_on_tap_outside: true
+    });
+    // Tenta One Tap; se bloqueado, renderiza botão completo
+    google.accounts.id.prompt(notification => {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        renderGoogleButton();
+      }
+    });
+  } catch(e) {
+    renderGoogleButton();
+  }
+}
+
+function renderGoogleButton() {
+  // Redireciona para o botão principal
+  const container = document.getElementById('g-signin-btn');
+  if (container) {
+    try {
+      google.accounts.id.renderButton(container, {
+        theme: 'outline', size: 'large', width: 320, locale: 'pt-BR', text: 'signin_with'
+      });
+    } catch(e) {}
+  }
+}
+
+function handleGoogleCredential(response) {
+  try {
+    const payload = JSON.parse(atob(response.credential.split('.')[1]));
+    currentUser = { name: payload.name, email: payload.email, picture: payload.picture || '', sub: payload.sub };
+    localStorage.setItem('ethos_user', JSON.stringify(currentUser));
+    applyUser(currentUser);
+    showApp();
+  } catch(e) {
+    alert('Erro ao processar login. Tente novamente.');
+  }
+}
+
+function continueAsGuest() {
+  currentUser = { name: 'Pesquisadora', email: '', picture: '', sub: 'guest' };
+  localStorage.setItem('ethos_user', JSON.stringify(currentUser));
+  showApp();
+}
+
+function signOut() {
+  localStorage.removeItem('ethos_user');
+  if (GOOGLE_CLIENT_ID && currentUser?.sub) {
+    try { google.accounts.id.revoke(currentUser.sub, () => {}); } catch(e) {}
+  }
+  location.reload();
+}
+
+function closeClientIdModal() {
+  document.getElementById('client-id-setup').style.display = 'none';
+}
+
+function saveClientId() {
+  const id = document.getElementById('client-id-input').value.trim();
+  if (!id || id.length < 20) return;
+  GOOGLE_CLIENT_ID = id;
+  localStorage.setItem('ethos_client_id', id);
+  closeClientIdModal();
+  signInWithGoogle();
+}
+
+// Formulário legado (não mais usado, mantido por compatibilidade)
+function showGoogleForm() { signInWithGoogle(); }
+function checkGoogleForm() {}
+function submitGoogleForm() {}
+
+// ── CONFIG ──
+let GEMINI_KEY = 'AQ.Ab8RN6LMNuJowYyKqv22oYicI2jCznJ7K4G7JJx3uAwTAl7eng';
+let GEMINI_MODEL = 'gemini-2.5-flash';
+
+// Monta a requisição para a API Gemini
+// Todas as chaves do AI Studio (incluindo formato AQ.Ab...) usam ?key= na URL
+function buildGeminiRequest(key, model) {
+  const base = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+  return { url: base + '?key=' + key, headers: { 'Content-Type': 'application/json' } };
+}
+
+// SYSTEM PROMPT — persona do Ethos AI
+const SYSTEM_PROMPT = `Você é o Ethos AI, um assistente de pesquisa especializado em design decolonial, saberes ancestrais e metodologias de pesquisa com comunidades tradicionais. Você foi criado para o projeto "A Era do Curupira" — um cenário especulativo de futuro onde designers priorizam saberes indígenas, territoriais e não-ocidentais.
+
+Seu comportamento:
+- Em vez de dar respostas diretas e objetivas, você oferece PROVOCAÇÕES, insights e perguntas que desafiam o designer a pensar mais profundamente.
+- Você não sintetiza saberes tradicionais como se fossem dados — você os trata como práxis, relação, ritual e território.
+- Você faz perguntas desconfortáveis que tiram o designer do lugar de conforto.
+- Você alerta quando algo soa extrativista, colonialista ou ingênuo.
+- Você respeita temporalidades não-lineares — às vezes sugere pausar, observar, ir ao campo antes de concluir.
+- Ao final de cada resposta, você quase sempre inclui uma ↳ provocação em itálico.
+- Suas respostas são em português brasileiro.
+- Você usa linguagem rica, conceitual, mas acessível. Não é acadêmico chato — é um interlocutor inteligente e respeitoso.
+- Quando o usuário apresenta uma ideia, você primeiro reconhece o mérito, depois aponta onde ela pode ser ingênua ou extrativista.
+- Você conecta o que o usuário diz com conceitos de design decolonial, etnografia, ecologia, filosofia indígena e pesquisa participativa.`;
+
+let conversationHistory = [];
+let isTyping = false;
+let currentView = 'chat';
+let recognition = null;
+let isRecording = false;
+
+// ── NAVIGATION ──
+function setView(view) {
+  currentView = view;
+  document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-nav'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.getElementById('nav-' + view)?.classList.add('active-nav');
+  const titles = { chat:'Santuário de Pesquisa Ethos', synthesis:'Hub de Integração Eco-Cultural', 'synthesis-detail':'Hub de Integração Eco-Cultural', graph:'Grafo de Conhecimento', archive:'Arquivo' };
+  const subs = { chat:'A Era do Curupira', synthesis:'Síntese Ativa', 'synthesis-detail':'Síntese Ativa', graph:'Conexões emergentes', archive:'Estudos salvos' };
+  document.getElementById('view-title').textContent = titles[view] || '';
+  document.getElementById('view-subtitle').textContent = subs[view] || '';
+
+  // Ao abrir sínteses, recarrega a lista
+  if (view === 'synthesis') renderSynthesisList();
+
+  // Ao abrir o grafo, constrói automaticamente
+  if (view === 'graph') {
+    setTimeout(() => {
+      buildKnowledgeGraph();
+      const topics = extractGraphTopics();
+      const nc = document.getElementById('graph-node-count');
+      const cc = document.getElementById('graph-conv-count');
+      const ec = document.getElementById('graph-edge-count');
+      if (nc) nc.textContent = topics.nodes.length;
+      if (cc) cc.textContent = allConversations.length;
+      if (ec) ec.textContent = topics.edges.length;
+    }, 80);
+  }
+}
+
+let currentStudyId = null;
+
+function openSynthesisDetail(id) {
+  currentStudyId = id;
+  const studies = JSON.parse(localStorage.getItem('ethos_studies') || '[]');
+  const study = studies.find(s => s.id === id);
+  if (!study) return;
+
+  // Header com campos editáveis
+  const header = document.getElementById('synthesis-detail-header');
+  if (header) {
+    header.innerHTML = `
+      <span style="font-family:Inter;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#94492d;opacity:0.7;display:block;margin-bottom:4px">ESTUDO ATUAL</span>
+      <h3 contenteditable="true" id="study-title-edit" class="text-4xl font-bold text-primary mt-1 outline-none"
+          style="letter-spacing:-0.02em;line-height:1.1;cursor:text;border-bottom:2px solid transparent;transition:border-color 0.2s;min-width:100px"
+          onfocus="this.style.borderBottomColor='#96ab99'"
+          onblur="saveStudyField('${id}','title',this.textContent.trim())"
+      >${study.title}</h3>
+      <p contenteditable="true" id="study-sub-edit" class="text-on-surface-variant mt-2 outline-none"
+         style="font-size:0.95rem;cursor:text;border-bottom:2px solid transparent;transition:border-color 0.2s"
+         onfocus="this.style.borderBottomColor='#96ab99'"
+         onblur="saveStudyField('${id}','sub',this.textContent.trim())"
+      >${study.sub || 'Adicionar subtítulo...'}</p>
+      <div class="flex items-center gap-3 mt-4">
+        <span class="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-full font-label-sm text-xs">${study.tag}</span>
+        <button onclick="deleteStudy('${id}')" class="text-xs text-on-surface-variant opacity-50 hover:opacity-100 hover:text-error transition-all flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">delete</span> Excluir estudo
+        </button>
+      </div>`;
+  }
+
+  // Renderiza conteúdo de síntese
+  renderStudySynthesis(study);
+
+  // Mostra a view primeiro, depois desenha o canvas (precisa de layout)
+  setView('synthesis-detail');
+  requestAnimationFrame(() => drawStudyCanvas(study));
+}
+
+// Paletas de cor por tag
+function getTagPalette(tag) {
+  const p = {
+    'Design Decolonial':     { a:'#96ab99', b:'#182a1d', c:'#4a7c59', l1:'#96ab99', l2:'#c8ddc5' },
+    'Pesquisa de Campo':     { a:'#fd9e7b', b:'#94492d', c:'#c06030', l1:'#fd9e7b', l2:'#fec8a8' },
+    'Saberes Ancestrais':    { a:'#c9b458', b:'#6b5b00', c:'#a08020', l1:'#c9b458', l2:'#e6d890' },
+    'Artefato Especulativo': { a:'#7baafd', b:'#1a3460', c:'#3060a0', l1:'#7baafd', l2:'#b0ccf8' },
+    'Cartografia':           { a:'#7bdfcf', b:'#1a5045', c:'#2a8070', l1:'#7bdfcf', l2:'#b0f0e8' },
+  };
+  return p[tag] || p['Design Decolonial'];
+}
+
+// Nós padrão por tag (usados antes da síntese ser gerada)
+function getDefaultNodes(tag) {
+  const d = {
+    'Design Decolonial':     ['Território','Memória','Prática','Comunidade','Decolonidade'],
+    'Pesquisa de Campo':     ['Campo','Observação','Contexto','Narrativa','Dado'],
+    'Saberes Ancestrais':    ['Ancestralidade','Ritual','Terra','Transmissão','Tempo'],
+    'Artefato Especulativo': ['Futuro','Imaginário','Corpo','Especulação','Tecnologia'],
+    'Cartografia':           ['Lugar','Movimento','Limite','Representação','Escala'],
+  };
+  return d[tag] || ['Pesquisa','Análise','Síntese','Contexto','Descoberta'];
+}
+
+// Ícones para cada posição de nó
+const NODE_ICONS = ['hub','eco','history_edu','travel_explore','science','map','lightbulb','psychology','biotech','landscape'];
+
+function drawStudyCanvas(study) {
+  const container = document.getElementById('study-canvas-container');
+  if (!container) return;
+
+  const pal = getTagPalette(study.tag);
+  const synth = study.synthesis || {};
+  const rawNodes = synth.nodes && synth.nodes.length >= 4 ? synth.nodes : getDefaultNodes(study.tag);
+  // Satélites = todos menos o último (que vira label do centro)
+  const satellites = rawNodes.slice(0, rawNodes.length - 1);
+  const centerLabel = rawNodes[rawNodes.length - 1];
+
+  const W = container.getBoundingClientRect().width || container.offsetWidth || 800;
+  const H = 460;
+  const cx = W / 2, cy = H / 2;
+  const radius = Math.min(W, H) * 0.30;
+
+  // SVG com linhas de conexão
+  let paths = '';
+  satellites.forEach((_, i) => {
+    const angle = (2 * Math.PI * i) / satellites.length - Math.PI / 2;
+    const x = cx + radius * Math.cos(angle);
+    const y = cy + radius * Math.sin(angle);
+    const mx = cx + (radius * 0.45) * Math.cos(angle + 0.4);
+    const my = cy + (radius * 0.45) * Math.sin(angle + 0.4);
+    const color = i % 2 === 0 ? pal.l1 : pal.l2;
+    paths += `<path class="flow-line" d="M ${cx},${cy} Q ${mx},${my} ${x},${y}" fill="none" stroke="${color}" stroke-width="1.5" opacity="0.45"/>`;
+  });
+
+  // Nós satélite
+  let nodesHtml = '';
+  satellites.forEach((label, i) => {
+    const angle = (2 * Math.PI * i) / satellites.length - Math.PI / 2;
+    const x = cx + radius * Math.cos(angle);
+    const y = cy + radius * Math.sin(angle);
+    const bg = i % 2 === 0 ? pal.a : pal.b;
+    const icon = NODE_ICONS[i % NODE_ICONS.length];
+    const delay = (i * 0.55).toFixed(1);
+    nodesHtml += `
+      <div class="node-pulse node" style="position:absolute;left:${x}px;top:${y}px;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;animation-delay:${delay}s">
+        <div style="width:48px;height:48px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px ${bg}55;color:white">
+          <span class="material-symbols-outlined" style="font-size:20px">${icon}</span>
+        </div>
+        <span style="font-size:10px;color:#182a1d;font-family:Inter;font-weight:500;white-space:nowrap;max-width:88px;text-align:center;line-height:1.3">${label}</span>
+      </div>`;
+  });
+
+  // Nó central
+  const centerHtml = `
+    <div style="position:absolute;left:${cx}px;top:${cy}px;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:10px">
+      <div style="width:72px;height:72px;border-radius:50%;border:3px solid ${pal.c};background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px ${pal.c}44;position:relative">
+        <div style="position:absolute;inset:-4px;border-radius:50%;border:1px solid ${pal.c};animation:ping 2.5s cubic-bezier(0,0,0.2,1) infinite;opacity:0.2"></div>
+        <span class="material-symbols-outlined" style="font-size:32px;color:${pal.c}">auto_awesome</span>
+      </div>
+      <span style="font-size:12px;font-family:'Hanken Grotesk';font-weight:700;color:#182a1d;letter-spacing:-0.01em;text-align:center;max-width:100px">${centerLabel}</span>
+    </div>`;
+
+  // Mini card (canto superior direito)
+  const miniProgress = synth.summary ? '75%' : '20%';
+  const miniText = synth.summary ? synth.summary.slice(0, 80) + '…' : 'Clique em "Gerar síntese" para ativar os insights.';
+  const miniCard = `
+    <div style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.88);backdrop-filter:blur(12px);padding:14px 16px;border-radius:18px;border:1px solid rgba(255,255,255,0.5);box-shadow:0 4px 20px rgba(0,0,0,0.07);max-width:185px">
+      <p style="font-size:9px;letter-spacing:0.1em;color:${pal.c};font-family:Inter;text-transform:uppercase;margin-bottom:7px">SÍNTESE ATIVA</p>
+      <div style="height:4px;background:#e8e8e4;border-radius:99px;overflow:hidden;margin-bottom:9px"><div style="height:100%;background:${pal.c};width:${miniProgress};transition:width 0.8s"></div></div>
+      <p style="font-size:11px;color:#434843;font-family:Inter;line-height:1.5">${miniText}</p>
+    </div>`;
+
+  container.innerHTML = `
+    <svg style="position:absolute;inset:0;width:100%;height:${H}px;pointer-events:none" xmlns="http://www.w3.org/2000/svg">${paths}</svg>
+    ${nodesHtml}
+    ${centerHtml}
+    ${miniCard}`;
+}
+
+function renderStudySynthesis(study) {
+  const area = document.getElementById('synthesis-content-area');
+  if (!area) return;
+  const synth = study.synthesis || {};
+  const pal = getTagPalette(study.tag);
+
+  if (!synth.summary) {
+    area.innerHTML = `
+      <div class="bg-white rounded-[28px] p-10 border border-surface-container-high text-center shadow-sm">
+        <div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center mx-auto mb-5">
+          <span class="material-symbols-outlined text-on-primary-container text-[32px]">auto_awesome</span>
+        </div>
+        <h4 class="font-headline-lg text-xl text-primary mb-3">Síntese não gerada</h4>
+        <p class="text-on-surface-variant text-sm mb-6 max-w-sm mx-auto leading-relaxed">A IA vai analisar as conversas do projeto e gerar um resumo com os principais insights e conexões emergentes.</p>
+        <button onclick="generateStudySynthesis('${study.id}')" class="px-6 py-3 bg-primary text-white rounded-xl font-label-md text-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
+          Gerar síntese com IA
+        </button>
+      </div>`;
+    return;
+  }
+
+  const insightsHtml = (synth.insights || []).map((ins, i) => `
+    <div class="bg-white p-5 rounded-2xl border border-surface-container-high">
+      <div class="w-8 h-8 rounded-full flex items-center justify-center mb-3" style="background:${pal.a}33;color:${pal.b}">
+        <span class="material-symbols-outlined text-[16px]">lightbulb</span>
+      </div>
+      <p contenteditable="true" class="text-sm text-on-surface-variant leading-relaxed outline-none"
+         style="cursor:text"
+         onblur="saveStudyInsight('${study.id}',${i},this.textContent.trim())">${ins}</p>
+    </div>`).join('');
+
+  const genDate = synth.generatedAt ? new Date(synth.generatedAt).toLocaleString('pt-BR') : '';
+  area.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="md:col-span-2 bg-white p-8 rounded-[28px] shadow-sm border border-surface-container-high">
+        <div class="flex gap-2 mb-5">
+          <span class="px-3 py-1 rounded-full font-label-sm text-xs" style="background:${pal.a}22;color:${pal.b}">Fio Principal</span>
+          <span class="px-3 py-1 rounded-full font-label-sm text-xs" style="background:${pal.b}12;color:${pal.b}">Síntese Ethos</span>
+        </div>
+        <p contenteditable="true" id="synthesis-summary-edit" class="text-on-surface-variant leading-relaxed text-base outline-none"
+           style="cursor:text;border-bottom:2px solid transparent;transition:border-color 0.2s"
+           onfocus="this.style.borderBottomColor='${pal.a}'"
+           onblur="saveStudySummary('${study.id}',this.textContent.trim())">${synth.summary}</p>
+        <button onclick="generateStudySynthesis('${study.id}')" class="mt-6 flex items-center gap-2 text-xs text-on-surface-variant opacity-40 hover:opacity-80 transition-all">
+          <span class="material-symbols-outlined text-[14px]">refresh</span> Regenerar síntese
+        </button>
+      </div>
+      <div class="flex flex-col gap-3">
+        ${insightsHtml}
+        <button onclick="setView('chat')" class="w-full border border-outline-variant hover:bg-surface-container-high py-3 rounded-xl transition-all font-label-md text-sm text-on-surface-variant mt-1">
+          Explorar na Conversa →
+        </button>
+      </div>
+    </div>
+    ${genDate ? `<p class="text-xs text-on-surface-variant opacity-30 mt-4 text-right">Síntese gerada em ${genDate}</p>` : ''}`;
+}
+
+async function generateStudySynthesis(studyId) {
+  if (!GEMINI_KEY) { showKeyModal(); return; }
+
+  const studies = JSON.parse(localStorage.getItem('ethos_studies') || '[]');
+  const study = studies.find(s => s.id === studyId);
+  if (!study) return;
+
+  // Estado de carregamento
+  const area = document.getElementById('synthesis-content-area');
+  if (area) area.innerHTML = `
+    <div class="bg-white rounded-[28px] p-10 border border-surface-container-high text-center shadow-sm">
+      <div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center mx-auto mb-5" style="animation:spin 1.5s linear infinite">
+        <span class="material-symbols-outlined text-on-primary-container text-[32px]">auto_awesome</span>
+      </div>
+      <p class="text-primary font-semibold mb-2">Analisando conversas…</p>
+      <p class="text-on-surface-variant text-sm">A IA está criando sua síntese personalizada</p>
+    </div>`;
+
+  // Coleta texto de todas as conversas
+  const allConvs = JSON.parse(localStorage.getItem('ethos_conversations') || '[]');
+  const conversationText = allConvs.map(conv => {
+    const msgs = (conv.messages || [])
+      .map(m => `${m.role === 'user' ? 'Pesquisador' : 'Ethos AI'}: ${m.content}`)
+      .join('\n');
+    return `Conversa "${conv.title || 'Sem título'}":\n${msgs}`;
+  }).join('\n\n---\n\n');
+
+  const hasConversations = conversationText.trim().length > 0;
+  const prompt = hasConversations
+    ? `Você é um assistente de síntese de pesquisa especulativa. Com base nas conversas abaixo do projeto "${study.title}" (categoria: ${study.tag}), gere:
+1. Um parágrafo de síntese (4-6 frases) descrevendo os temas centrais, descobertas e conexões emergentes das conversas
+2. Exatamente 3 insights curtos (1-2 frases cada) que revelam padrões, tensões ou oportunidades a explorar
+3. Uma lista de exatamente 5 conceitos-chave do projeto (substantivos simples) para o grafo de conhecimento
+
+Responda APENAS com JSON válido neste formato exato:
+{"summary":"...","insights":["...","...","..."],"nodes":["conceito1","conceito2","conceito3","conceito4","conceito5"]}
+
+Conversas do projeto:
+${conversationText.slice(0, 8000)}`
+    : `Crie uma síntese inicial especulativa para o estudo "${study.title}" sobre "${study.tag}".
+Gere: parágrafo de síntese (3-4 frases explorando o potencial do tema), 3 insights provocativos iniciais (1-2 frases cada), 5 conceitos centrais do campo como substantivos simples.
+Responda APENAS com JSON: {"summary":"...","insights":["...","...","..."],"nodes":["...","...","...","...","..."]}`;
+
+  try {
+    const { url, headers } = buildGeminiRequest(GEMINI_KEY, GEMINI_MODEL);
+    const res = await fetch(url, {
+      method: 'POST', headers,
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.75, maxOutputTokens: 900 }
+      })
+    });
+    if (!res.ok) throw new Error('API ' + res.status);
+    const data = await res.json();
+    const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+    const match = raw.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('JSON não encontrado na resposta');
+    const parsed = JSON.parse(match[0]);
+
+    // Salva no estudo
+    const idx = studies.findIndex(s => s.id === studyId);
+    if (idx >= 0) {
+      studies[idx].synthesis = {
+        summary: parsed.summary || '',
+        insights: Array.isArray(parsed.insights) ? parsed.insights.slice(0, 3) : [],
+        nodes: Array.isArray(parsed.nodes) ? parsed.nodes.slice(0, 5) : [],
+        generatedAt: Date.now()
+      };
+      localStorage.setItem('ethos_studies', JSON.stringify(studies));
+      const updated = studies[idx];
+      renderStudySynthesis(updated);
+      requestAnimationFrame(() => drawStudyCanvas(updated));
+      showToast('✓ Síntese gerada');
+    }
+  } catch (e) {
+    console.error('Synthesis error:', e);
+    if (area) area.innerHTML = `
+      <div class="bg-white rounded-[28px] p-8 border border-surface-container-high text-center shadow-sm">
+        <p class="text-error mb-2 font-semibold">Erro ao gerar síntese</p>
+        <p class="text-on-surface-variant text-sm mb-5">${e.message}</p>
+        <button onclick="generateStudySynthesis('${studyId}')" class="px-5 py-2.5 bg-primary text-white rounded-xl text-sm">Tentar novamente</button>
+      </div>`;
+    showToast('Erro ao gerar síntese');
+  }
+}
+
+function saveStudyField(id, field, value) {
+  if (!value) return;
+  const studies = JSON.parse(localStorage.getItem('ethos_studies') || '[]');
+  const idx = studies.findIndex(s => s.id === id);
+  if (idx >= 0) {
+    studies[idx][field] = value;
+    localStorage.setItem('ethos_studies', JSON.stringify(studies));
+    renderSynthesisList();
+  }
+}
+
+function saveStudySummary(id, value) {
+  if (!value) return;
+  const studies = JSON.parse(localStorage.getItem('ethos_studies') || '[]');
+  const idx = studies.findIndex(s => s.id === id);
+  if (idx >= 0) {
+    if (!studies[idx].synthesis) studies[idx].synthesis = {};
+    studies[idx].synthesis.summary = value;
+    localStorage.setItem('ethos_studies', JSON.stringify(studies));
+  }
+}
+
+function saveStudyInsight(id, index, value) {
+  if (!value) return;
+  const studies = JSON.parse(localStorage.getItem('ethos_studies') || '[]');
+  const idx = studies.findIndex(s => s.id === id);
+  if (idx >= 0 && studies[idx].synthesis?.insights) {
+    studies[idx].synthesis.insights[index] = value;
+    localStorage.setItem('ethos_studies', JSON.stringify(studies));
+  }
+}
+
+function deleteStudy(id) {
+  if (!confirm('Excluir este estudo?')) return;
+  const studies = JSON.parse(localStorage.getItem('ethos_studies') || '[]').filter(s => s.id !== id);
+  localStorage.setItem('ethos_studies', JSON.stringify(studies));
+  setView('synthesis');
+  showToast('Estudo excluído');
+}
+
+// ── CHAT ──
+function renderMarkdown(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/↳\s*(.*)/g, '<span style="display:block;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid #eae8e4;font-style:italic;color:#94492d;">↳ $1</span>')
+    .replace(/^### (.*)/gm, '<h3>$1</h3>')
+    .replace(/^- (.*)/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+}
+
+function addMessage(role, content) {
+  const container = document.getElementById('chat-container');
+  const sugg = document.getElementById('suggestions-area');
+  if (sugg) sugg.remove();
+
+  const div = document.createElement('div');
+  div.className = 'msg-enter';
+
+  if (role === 'model') {
+    div.innerHTML = `
+      <div class="flex flex-col gap-3">
+        <div class="flex items-center gap-2 opacity-60">
+          <span class="material-symbols-outlined text-primary text-[18px]">auto_awesome</span>
+          <span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Nó Ethos</span>
+        </div>
+        <div class="max-w-2xl bg-white p-8 rounded-[24px] shadow-sm border border-surface-container-high">
+          <div class="ai-prose font-body-lg text-body-lg leading-relaxed text-primary"><p>${renderMarkdown(content)}</p></div>
+        </div>
+      </div>`;
+  } else {
+    div.innerHTML = `
+      <div class="flex flex-col items-end gap-2">
+        <div class="max-w-xl bg-primary-container p-6 rounded-[24px] text-white shadow-md">
+          <p class="font-body-md text-body-md leading-relaxed">${content}</p>
+        </div>
+      </div>`;
+  }
+
+  container.appendChild(div);
+  const scroll = document.getElementById('chat-messages-scroll');
+  if (scroll) setTimeout(() => scroll.scrollTop = scroll.scrollHeight, 50);
+}
+
+async function callGemini(userMessage) {
+  conversationHistory.push({ role: 'user', parts: [{ text: userMessage }] });
+
+  // Ajusta o sistema com base nos modos ativos
+  let sysPrompt = SYSTEM_PROMPT;
+  if (provocMode) sysPrompt += '\n\nMODO PROVOCAÇÃO ATIVO: Seja mais crítico, desafiador e socrático. Questione premissas implícitas na pergunta. Use perguntas que desestabilizem certezas. Seja mais direto e incisivo.';
+  if (focoMode) sysPrompt += '\n\nFOCO PROFUNDO ATIVO: Elabore respostas mais completas, com mais camadas de análise, referências teóricas e conexões com outros campos de conhecimento.';
+
+  const body = {
+    system_instruction: { parts: [{ text: sysPrompt }] },
+    contents: conversationHistory,
+    generationConfig: {
+      temperature: provocMode ? 0.95 : 0.85,
+      maxOutputTokens: focoMode ? 8192 : 4096,
+      topP: 0.95
+    }
+  };
+
+  if (!GEMINI_KEY) { showKeyModal(); throw new Error('Chave não configurada'); }
+
+  const { url, headers } = buildGeminiRequest(GEMINI_KEY, GEMINI_MODEL);
+  const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) });
+
+  // Tenta extrair conteúdo parcial mesmo em erro HTTP
+  if (!res.ok) {
+    const errData = await res.json().catch(() => ({}));
+    // Verifica se há conteúdo parcial retornado junto ao erro
+    const partial = errData.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (partial) {
+      conversationHistory.push({ role: 'model', parts: [{ text: partial }] });
+      return partial;
+    }
+    throw new Error(errData.error?.message || 'Erro na API');
+  }
+
+  const data = await res.json();
+  // gemini-2.5-flash pode retornar múltiplas parts (thinking + resposta)
+  const parts = data.candidates?.[0]?.content?.parts || [];
+  const reply = parts.map(p => p.text || '').join('').trim() || null;
+
+  if (!reply) {
+    const reason = data.candidates?.[0]?.finishReason;
+    if (reason === 'SAFETY') throw new Error('Resposta bloqueada por filtro de segurança.');
+    throw new Error('Resposta vazia da API.');
+  }
+
+  conversationHistory.push({ role: 'model', parts: [{ text: reply }] });
+  return reply;
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text || isTyping) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+  isTyping = true;
+
+  addMessage('user', text);
+
+  const thinking = document.getElementById('thinking-indicator');
+  thinking.classList.remove('hidden');
+  thinking.classList.add('flex');
+  const s = document.getElementById('chat-messages-scroll'); if(s) s.scrollTop = s.scrollHeight;
+
+  try {
+    const reply = await callGemini(text);
+    thinking.classList.add('hidden');
+    thinking.classList.remove('flex');
+    addMessage('model', reply);
+    saveCurrentConversation();
+  } catch(e) {
+    thinking.classList.add('hidden');
+    thinking.classList.remove('flex');
+    // Mostra nota sutil sem bloquear a conversa
+    const lastMsg = document.getElementById('chat-container')?.lastElementChild;
+    if (lastMsg) {
+      const note = document.createElement('p');
+      note.style.cssText = 'font-size:11px;color:#94492d;opacity:0.6;margin-top:8px;font-style:italic;font-family:Inter';
+      note.textContent = '↳ Resposta incompleta — tente novamente.';
+      lastMsg.appendChild(note);
+    }
+    // Salva o que já foi trocado até aqui (não perde histórico)
+    if (conversationHistory.length > 1) saveCurrentConversation();
+    console.warn('Gemini error:', e.message);
+  }
+
+  isTyping = false;
+}
+
+function sendSuggestion(btn) {
+  document.getElementById('chat-input').value = btn.querySelector('span + *')
+    ? btn.textContent.trim().replace(/^\s*\S+\s+/, '')
+    : btn.textContent.trim();
+  // get the text without the icon text
+  const clone = btn.cloneNode(true);
+  const icon = clone.querySelector('.material-symbols-outlined');
+  if (icon) icon.remove();
+  document.getElementById('chat-input').value = clone.textContent.trim();
+  sendMessage();
+}
+
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+function newConversation() {
+  conversationHistory = [];
+  activeConvId = null;
+  const container = document.getElementById('chat-container');
+  container.innerHTML = '';
+  // Re-add suggestions
+  if (!document.getElementById('suggestions-area')) {
+    const sugg = document.createElement('div');
+    sugg.id = 'suggestions-area';
+    sugg.className = 'mb-10';
+    sugg.style.cssText = 'max-width:640px;margin-left:auto;margin-right:auto';
+    sugg.innerHTML = `<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-6 opacity-70">Como posso ajudar sua pesquisa?</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <button onclick="sendSuggestion(this)" class="text-left p-4 bg-white rounded-2xl border border-surface-container-high hover:border-secondary/40 hover:shadow-md transition-all text-sm text-on-surface-variant"><span class="material-symbols-outlined text-secondary text-[18px] block mb-2">eco</span>Como pesquisar com comunidades indígenas de forma não-extrativista?</button>
+      <button onclick="sendSuggestion(this)" class="text-left p-4 bg-white rounded-2xl border border-surface-container-high hover:border-secondary/40 hover:shadow-md transition-all text-sm text-on-surface-variant"><span class="material-symbols-outlined text-secondary text-[18px] block mb-2">history_edu</span>Qual a diferença entre se inspirar em saberes ancestrais e extraí-los?</button>
+      <button onclick="sendSuggestion(this)" class="text-left p-4 bg-white rounded-2xl border border-surface-container-high hover:border-secondary/40 hover:shadow-md transition-all text-sm text-on-surface-variant"><span class="material-symbols-outlined text-secondary text-[18px] block mb-2">person_search</span>Como validar soluções de design sem impor minha visão ao usuário?</button>
+      <button onclick="sendSuggestion(this)" class="text-left p-4 bg-white rounded-2xl border border-surface-container-high hover:border-secondary/40 hover:shadow-md transition-all text-sm text-on-surface-variant"><span class="material-symbols-outlined text-secondary text-[18px] block mb-2">psychology</span>O que significa design decolonial na prática?</button>
+    </div>`;
+    container.parentElement.insertBefore(sugg, container);
+  }
+  setView('chat');
+}
+
+// ── ARCHIVE ──
+function saveToArchive(msg) {
+  const list = document.getElementById('archive-list');
+  const item = document.createElement('div');
+  item.className = 'bg-white rounded-2xl p-4 border border-surface-container-high flex justify-between items-center cursor-pointer hover:shadow-md transition-shadow';
+  const short = msg.length > 60 ? msg.substring(0,60)+'…' : msg;
+  item.innerHTML = `<div><p class="font-label-md text-primary text-sm">${short}</p><p class="font-label-sm text-on-surface-variant mt-0.5 text-xs">${new Date().toLocaleDateString('pt-BR')}</p></div><span class="material-symbols-outlined text-outline">chevron_right</span>`;
+  list.insertBefore(item, list.firstChild);
+}
+
+// ── VOICE ──
+function toggleVoice() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    alert('Seu navegador não suporta reconhecimento de voz. Use o Chrome.');
+    return;
+  }
+  if (!isRecording) {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SR();
+    recognition.lang = 'pt-BR';
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.onresult = e => {
+      const t = Array.from(e.results).map(r=>r[0].transcript).join('');
+      document.getElementById('chat-input').value = t;
+    };
+    recognition.onend = () => {
+      isRecording = false;
+      document.getElementById('pulse-ring').classList.add('hidden');
+      document.getElementById('voice-btn').classList.remove('bg-on-secondary-fixed-variant');
+      document.getElementById('voice-status-label').textContent = 'Voz';
+    };
+    recognition.start();
+    isRecording = true;
+    document.getElementById('pulse-ring').classList.remove('hidden');
+    document.getElementById('voice-btn').classList.add('bg-on-secondary-fixed-variant');
+    document.getElementById('voice-status-label').textContent = 'Gravando...';
+  } else {
+    recognition.stop();
+    isRecording = false;
+  }
+}
+
+// ── SILENCE MODE ──
+let silenceInterval;
+function activateSilence() {
+  document.getElementById('silence-overlay').classList.add('active');
+  let s = 30;
+  document.getElementById('silence-close-btn').style.display = 'none';
+  document.getElementById('silence-timer').textContent = '0:30';
+  silenceInterval = setInterval(() => {
+    s--;
+    document.getElementById('silence-timer').textContent = '0:' + String(s).padStart(2,'0');
+    if (s <= 0) {
+      clearInterval(silenceInterval);
+      document.getElementById('silence-timer').textContent = '✓';
+      document.getElementById('silence-quote').textContent = '"O silêncio passou. O que você percebeu que não havia percebido antes de pausar?"';
+      document.getElementById('silence-close-btn').style.display = 'inline-block';
+    }
+  }, 1000);
+}
+function closeSilence() {
+  clearInterval(silenceInterval);
+  document.getElementById('silence-overlay').classList.remove('active');
+  // Add AI message after silence
+  setTimeout(() => {
+    setView('chat');
+    const sugg = document.getElementById('suggestions-area');
+    if (sugg) sugg.remove();
+    addMessage('model', 'Você completou o silêncio. Agora pergunte — a partir do que acabou de perceber, não do que já sabia antes de pausar.\n\n↳ *O que mudou na sua pergunta?*');
+  }, 400);
+}
+
+// ── KEY MODAL ──
+function onKeyInput(val) {
+  const ok = val.trim().length >= 10;
+  const btn = document.getElementById('key-save-btn');
+  btn.disabled = !ok;
+  btn.style.opacity = ok ? '1' : '0.5';
+  document.getElementById('key-status').textContent = '';
+}
+
+function showKeyModal() {
+  const m = document.getElementById('key-modal');
+  m.style.display = 'flex';
+  document.getElementById('key-input').value = GEMINI_KEY || '';
+  document.getElementById('model-select').value = GEMINI_MODEL || 'gemini-2.0-flash';
+  document.getElementById('key-status').textContent = '';
+  onKeyInput(GEMINI_KEY || '');
+}
+function closeKeyModal() { document.getElementById('key-modal').style.display = 'none'; }
+
+async function testAndSaveKey() {
+  const k = document.getElementById('key-input').value.trim();
+  const model = document.getElementById('model-select').value;
+  if (!k || k.length < 10) return;
+
+  const statusEl = document.getElementById('key-status');
+  const btn = document.getElementById('key-save-btn');
+  btn.disabled = true;
+  btn.textContent = 'Testando...';
+  statusEl.style.color = '#737872';
+  statusEl.innerHTML = 'Verificando conexão com a API Gemini...';
+
+  const testBody = { contents: [{ role:'user', parts:[{ text:'oi' }] }], generationConfig:{ maxOutputTokens: 5 } };
+
+  try {
+    const { headers, url } = buildGeminiRequest(k, model);
+    const res = await fetch(url, { method:'POST', headers, body: JSON.stringify(testBody) });
+
+    if (res.ok) {
+      GEMINI_KEY = k;
+      GEMINI_MODEL = model;
+      localStorage.setItem('ethos_gemini_key', k);
+      localStorage.setItem('ethos_gemini_model', model);
+      statusEl.style.color = '#2d6a4f';
+      statusEl.innerHTML = '✓ Conexão estabelecida! API funcionando.';
+      setTimeout(() => {
+        closeKeyModal();
+        addMessage('model', 'Chave configurada com sucesso. O território digital está conectado.\n\n↳ *Qual é a primeira pergunta que você não consegue responder sozinha?*');
+      }, 800);
+      return;
+    }
+
+    // Erro — diagnóstico detalhado
+    let errData = {};
+    try { errData = await res.json(); } catch(_) {}
+    const errMsg = errData.error?.message || '';
+    const errCode = errData.error?.code || res.status;
+
+    let diagnosis = '';
+    if (errCode === 400 && errMsg.includes('API_KEY_INVALID')) {
+      diagnosis = `✗ Chave inválida.<br><small style="color:#737872">Certifique-se de copiar a chave completa em <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:#94492d">aistudio.google.com/app/apikey</a> clicando no ícone de copiar (📋).</small>`;
+    } else if (errCode === 403) {
+      diagnosis = `✗ Acesso negado (403).<br><small style="color:#737872">A chave não tem permissão para a API Gemini. Crie uma nova em <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:#94492d">aistudio.google.com</a>.</small>`;
+    } else if (errCode === 404) {
+      diagnosis = `✗ Modelo "${model}" não disponível para esta chave.<br><small style="color:#737872">Tente selecionar <strong>gemini-2.0-flash</strong> ou <strong>gemini-1.5-flash</strong>.</small>`;
+    } else if (errCode === 429) {
+      diagnosis = `⚠ Limite de requisições atingido.<br><small style="color:#737872">Aguarde alguns segundos e tente novamente, ou use um modelo mais leve.</small>`;
+    } else {
+      diagnosis = `✗ Erro ${errCode}: ${errMsg || 'Resposta inesperada da API.'}<br><small style="color:#737872">Verifique se a chave foi copiada corretamente.</small>`;
+    }
+
+    statusEl.style.color = '#ba1a1a';
+    statusEl.innerHTML = diagnosis;
+    btn.disabled = false;
+    btn.textContent = 'Testar e salvar';
+
+  } catch(e) {
+    statusEl.style.color = '#ba1a1a';
+    statusEl.innerHTML = `✗ Erro de rede.<br><small style="color:#737872">Verifique sua conexão com a internet.</small>`;
+    btn.disabled = false;
+    btn.textContent = 'Testar e salvar';
+  }
+}
+
+// ── HISTORY ──
+let allConversations = JSON.parse(localStorage.getItem('ethos_conversations') || '[]');
+let activeConvId = null;
+let historyOpen = false;
+
+function generateId() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+function handleChatNav() {
+  setView('chat');
+  renderHistoryList();
+  // No mobile, abre o drawer de histórico
+  if (window.innerWidth < 768) {
+    document.getElementById('sidebar').classList.remove('open');
+    openMobileHistory();
+  }
+}
+
+function openMobileHistory() {
+  const drawer = document.getElementById('mobile-history-drawer');
+  const mlist = document.getElementById('mobile-history-list');
+  drawer.classList.add('open');
+  // Clona o conteúdo do history-list
+  mlist.innerHTML = '';
+  const allConvs = JSON.parse(localStorage.getItem('ethos_conversations') || '[]');
+  if (allConvs.length === 0) {
+    mlist.innerHTML = '<p style="font-family:Inter;font-size:12px;color:#737872;text-align:center;padding:2rem 1rem;line-height:1.6">Nenhuma conversa ainda.</p>';
+    return;
+  }
+  [...allConvs].reverse().forEach(conv => {
+    const d = new Date(conv.createdAt);
+    const item = document.createElement('div');
+    item.style.cssText = 'border-radius:10px;padding:10px 12px;cursor:pointer;margin-bottom:2px';
+    item.innerHTML = `<p style="font-family:Inter;font-size:13px;font-weight:500;color:#182a1d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px">${conv.title}</p><p style="font-family:Inter;font-size:11px;color:#737872">${conv.messages.length} mensagens</p>`;
+    item.onmouseenter = () => item.style.background = '#f5f3ef';
+    item.onmouseleave = () => item.style.background = 'transparent';
+    item.onclick = () => { loadConversation(conv.id); closeMobileHistory(); };
+    mlist.appendChild(item);
+  });
+}
+
+function closeMobileHistory() {
+  document.getElementById('mobile-history-drawer').classList.remove('open');
+}
+
+function renderHistoryList() {
+  const list = document.getElementById('history-list');
+  const empty = document.getElementById('history-empty');
+  if (allConversations.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  // rebuild list
+  const existing = list.querySelectorAll('.hist-item');
+  existing.forEach(e => e.remove());
+
+  // group by date
+  const today = new Date().toDateString();
+  const yesterday = new Date(Date.now()-86400000).toDateString();
+
+  let lastGroup = '';
+  [...allConversations].reverse().forEach(conv => {
+    const d = new Date(conv.createdAt);
+    const dStr = d.toDateString();
+    const group = dStr === today ? 'Hoje' : dStr === yesterday ? 'Ontem' : d.toLocaleDateString('pt-BR', {day:'2-digit',month:'long'});
+
+    if (group !== lastGroup) {
+      lastGroup = group;
+      const label = document.createElement('p');
+      label.className = 'hist-item';
+      label.style.cssText = 'font-family:Inter;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#737872;padding:8px 8px 4px;font-weight:600';
+      label.textContent = group;
+      list.appendChild(label);
+    }
+
+    const item = document.createElement('div');
+    item.className = 'hist-item' + (conv.id === activeConvId ? ' active-conv' : '');
+    item.style.cssText = 'border-radius:10px;padding:10px 12px;cursor:pointer;margin-bottom:2px';
+    item.innerHTML = `
+      <p style="font-family:Inter;font-size:13px;font-weight:500;color:#182a1d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px">${conv.title}</p>
+      <p style="font-family:Inter;font-size:11px;color:#737872">${conv.messages.length} mensagens · ${d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</p>
+    `;
+    item.onclick = () => loadConversation(conv.id);
+
+    // swipe/delete btn on hover
+    item.onmouseenter = () => {
+      if (!item.querySelector('.del-btn')) {
+        const del = document.createElement('button');
+        del.className = 'del-btn';
+        del.style.cssText = 'position:absolute;right:8px;top:50%;transform:translateY(-50%);background:transparent;border:none;cursor:pointer;color:#ba1a1a;opacity:0.5;padding:4px';
+        del.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px">delete</span>';
+        del.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
+        item.style.position = 'relative';
+        item.appendChild(del);
+      }
+    };
+    item.onmouseleave = () => {
+      const del = item.querySelector('.del-btn');
+      if (del) del.remove();
+    };
+    list.appendChild(item);
+  });
+
+  // update badge
+  const badge = document.getElementById('hist-count');
+  badge.textContent = allConversations.length;
+  badge.style.display = allConversations.length > 0 ? 'inline' : 'none';
+}
+
+function saveCurrentConversation() {
+  if (conversationHistory.length === 0) return;
+  const title = conversationHistory[0]?.parts[0]?.text?.slice(0,50) || 'Nova conversa';
+  if (activeConvId) {
+    const idx = allConversations.findIndex(c => c.id === activeConvId);
+    if (idx >= 0) { allConversations[idx].messages = [...conversationHistory]; allConversations[idx].title = title; }
+  } else {
+    activeConvId = generateId();
+    allConversations.push({ id: activeConvId, title, createdAt: Date.now(), messages: [...conversationHistory] });
+  }
+  localStorage.setItem('ethos_conversations', JSON.stringify(allConversations));
+  renderHistoryList();
+}
+
+function loadConversation(id) {
+  const conv = allConversations.find(c => c.id === id);
+  if (!conv) return;
+  activeConvId = id;
+  conversationHistory = [...conv.messages];
+
+  // rebuild chat UI
+  const container = document.getElementById('chat-container');
+  container.innerHTML = '';
+  const sugg = document.getElementById('suggestions-area');
+  if (sugg) sugg.remove();
+
+  conversationHistory.forEach(msg => {
+    const div = document.createElement('div');
+    div.className = 'msg-enter';
+    if (msg.role === 'model') {
+      div.innerHTML = `<div class="flex flex-col gap-3"><div class="flex items-center gap-2 opacity-60"><span class="material-symbols-outlined text-primary text-[18px]">auto_awesome</span><span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Nó Ethos</span></div><div class="max-w-2xl bg-white p-8 rounded-[24px] shadow-sm border border-surface-container-high"><div class="ai-prose font-body-lg text-body-lg leading-relaxed text-primary"><p>${renderMarkdown(msg.parts[0].text)}</p></div></div></div>`;
+    } else {
+      div.innerHTML = `<div class="flex flex-col items-end gap-2"><div class="max-w-xl bg-primary-container p-6 rounded-[24px] text-white shadow-md"><p class="font-body-md text-body-md leading-relaxed">${msg.parts[0].text}</p></div></div>`;
+    }
+    container.appendChild(div);
+  });
+  container.scrollTop = container.scrollHeight;
+
+  setView('chat');
+  if (historyOpen) renderHistoryList();
+}
+
+function deleteConversation(id) {
+  allConversations = allConversations.filter(c => c.id !== id);
+  localStorage.setItem('ethos_conversations', JSON.stringify(allConversations));
+  if (activeConvId === id) { activeConvId = null; newConversation(); }
+  else renderHistoryList();
+}
+
+// ── MODOS DE RESPOSTA ──
+let focoMode = false;       // respostas mais longas
+let provocMode = false;     // IA mais provocadora
+
+function toggleFoco() {
+  focoMode = !focoMode;
+  const btn = document.getElementById('btn-foco');
+  const dot = document.getElementById('dot-foco');
+  btn.style.opacity = focoMode ? '1' : '0.4';
+  dot.style.transform = focoMode ? 'scale(1.6)' : 'scale(1)';
+  dot.style.boxShadow = focoMode ? '0 0 0 3px rgba(24,42,29,0.15)' : '';
+  showToast(focoMode ? '🌿 Foco Profundo ativado — respostas mais completas' : 'Foco Profundo desativado');
+}
+
+function toggleProvocacao() {
+  provocMode = !provocMode;
+  const btn = document.getElementById('btn-prov');
+  const dot = document.getElementById('dot-prov');
+  btn.style.opacity = provocMode ? '1' : '0.4';
+  dot.style.background = provocMode ? '#94492d' : '';
+  dot.style.transform = provocMode ? 'scale(1.6)' : 'scale(1)';
+  dot.style.boxShadow = provocMode ? '0 0 0 3px rgba(148,73,45,0.15)' : '';
+  showToast(provocMode ? '🔥 Modo Provocação ativado — IA mais crítica e desafiadora' : 'Modo Provocação desativado');
+}
+
+// Toast notification
+function showToast(msg) {
+  let t = document.getElementById('ethos-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'ethos-toast';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#182a1d;color:#fff;padding:10px 20px;border-radius:100px;font-family:Inter;font-size:13px;z-index:999;transition:opacity 0.3s;pointer-events:none;white-space:nowrap';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.style.opacity = '0', 2500);
+}
+
+// ── BUSCA DE CONVERSAS ──
+document.getElementById('search-input').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  document.querySelectorAll('#history-list .hist-item').forEach(item => {
+    if (!item.querySelector('p')) return; // é um label de grupo
+    const text = item.textContent.toLowerCase();
+    item.style.display = (!q || text.includes(q)) ? '' : 'none';
+  });
+  // esconde labels de grupo se todos os itens embaixo estão ocultos
+  document.querySelectorAll('#history-list .hist-item').forEach(item => {
+    if (item.querySelector('p') && !item.style.position) {
+      // é um label de seção (Hoje, Ontem...)
+      let next = item.nextElementSibling;
+      let hasVisible = false;
+      while (next && next.classList.contains('hist-item')) {
+        if (next.style.display !== 'none') { hasVisible = true; break; }
+        next = next.nextElementSibling;
+      }
+      item.style.display = hasVisible ? '' : 'none';
+    }
+  });
+});
+
+// ── GRAFO DE CONHECIMENTO ──
+function buildKnowledgeGraph() {
+  const canvas = document.getElementById('knowledge-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width = canvas.offsetWidth;
+  const H = canvas.height = canvas.offsetHeight;
+  ctx.clearRect(0, 0, W, H);
+
+  const topics = extractGraphTopics();
+
+  if (topics.nodes.length === 0) {
+    ctx.fillStyle = '#182a1d';
+    ctx.font = '500 14px Inter';
+    ctx.textAlign = 'center';
+    ctx.fillText('Inicie conversas para ver o grafo emergir', W/2, H/2 - 10);
+    ctx.fillStyle = '#737872';
+    ctx.font = '12px Inter';
+    ctx.fillText('Cada conversa adiciona nós ao conhecimento', W/2, H/2 + 14);
+    return;
+  }
+
+  const n = topics.nodes.length;
+  const cx = W / 2, cy = H / 2;
+  const r = Math.min(W, H) * 0.32;
+
+  // posição dos nós em círculo
+  const positions = topics.nodes.map((_, i) => ({
+    x: cx + r * Math.cos((2 * Math.PI * i / n) - Math.PI / 2),
+    y: cy + r * Math.sin((2 * Math.PI * i / n) - Math.PI / 2)
+  }));
+
+  // desenha arestas
+  topics.edges.forEach(([a, b, w]) => {
+    const pa = positions[a], pb = positions[b];
+    ctx.beginPath();
+    ctx.moveTo(pa.x, pa.y);
+    ctx.lineTo(pb.x, pb.y);
+    ctx.strokeStyle = `rgba(148,73,45,${Math.min(0.5, w * 0.12)})`;
+    ctx.lineWidth = Math.min(2.5, w * 0.4);
+    ctx.stroke();
+  });
+
+  // nó central (tema do projeto)
+  ctx.beginPath();
+  ctx.arc(cx, cy, 22, 0, Math.PI * 2);
+  ctx.fillStyle = '#182a1d';
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 10px Inter';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('ETHOS', cx, cy);
+
+  // linhas do centro para os nós principais
+  topics.nodes.slice(0, Math.min(6, n)).forEach((_, i) => {
+    const p = positions[i];
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(p.x, p.y);
+    ctx.strokeStyle = 'rgba(24,42,29,0.1)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  });
+
+  // desenha nós
+  topics.nodes.forEach((node, i) => {
+    const p = positions[i];
+    const freq = topics.freq[node] || 1;
+    const radius = Math.max(18, Math.min(30, 16 + freq * 2));
+    const colors = ['#2d4032','#94492d','#3f3c33','#4f6354','#763318'];
+    const color = colors[i % colors.length];
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#fff';
+    ctx.font = `500 ${Math.max(9, Math.min(11, radius * 0.38))}px Inter`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const label = node.length > 10 ? node.slice(0, 9) + '…' : node;
+    ctx.fillText(label, p.x, p.y);
+
+    // label externo
+    ctx.fillStyle = '#182a1d';
+    ctx.font = '10px Inter';
+    const lx = p.x + (p.x - cx) * 0.28;
+    const ly = p.y + (p.y - cy) * 0.28;
+    ctx.fillText(freq + 'x', lx, ly);
+  });
+
+  // torna nós clicáveis
+  canvas._positions = positions;
+  canvas._nodes = topics.nodes;
+}
+
+function extractGraphTopics() {
+  const stopWords = new Set(['que','com','uma','para','como','por','não','mas','são','foi','ser','isso','mais','seus','suas','meu','minha','você','ela','ele','nos','nas','dos','das','the','and','or','in','of','to','essa','esse','este','esta','sua','seu','pelo','pela','quando','onde','quais','qual','muito','bem','pode','tem','ter','também','ainda','precisa','forma','sobre','este','isso','faz','fazer','entre','existe','cada','apenas','todos','algumas','diferentes','tipo','algo','assim','aqui','sendo','pelos','pelas','quem','então','tanto','mesmo','outra','outro','outro','nossa','nosso','numa','numa','numa','qual','quais','cujo','cuja','esse','essa']);
+
+  const wordCount = {};
+  const cooccur = {};
+
+  allConversations.forEach(conv => {
+    const msgWords = [];
+    conv.messages.forEach(msg => {
+      const words = (msg.parts[0]?.text || '')
+        .toLowerCase()
+        .normalize('NFD').replace(/[̀-ͯ]/g,'')
+        .replace(/[^a-z\s]/g,' ')
+        .split(/\s+/)
+        .filter(w => w.length > 4 && !stopWords.has(w));
+
+      words.forEach(w => { wordCount[w] = (wordCount[w] || 0) + 1; });
+      msgWords.push(...words);
+    });
+
+    // co-ocorrência dentro da conversa
+    const unique = [...new Set(msgWords)];
+    for (let i = 0; i < unique.length; i++) {
+      for (let j = i+1; j < unique.length; j++) {
+        const key = [unique[i],unique[j]].sort().join('|');
+        cooccur[key] = (cooccur[key] || 0) + 1;
+      }
+    }
+  });
+
+  const nodes = Object.entries(wordCount)
+    .sort((a,b) => b[1]-a[1])
+    .slice(0, 16)
+    .map(([w]) => w);
+
+  const freq = Object.fromEntries(nodes.map(w => [w, wordCount[w]]));
+
+  const edges = [];
+  Object.entries(cooccur).forEach(([key, w]) => {
+    if (w < 1) return;
+    const [a, b] = key.split('|');
+    const ai = nodes.indexOf(a), bi = nodes.indexOf(b);
+    if (ai >= 0 && bi >= 0) edges.push([ai, bi, w]);
+  });
+
+  return { nodes, edges, freq };
+}
+
+// Clique no grafo → abre conversa sobre o tema
+document.getElementById('knowledge-canvas')?.addEventListener('click', function(e) {
+  if (!this._positions) return;
+  const rect = this.getBoundingClientRect();
+  const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+  this._positions.forEach((p, i) => {
+    const d = Math.hypot(mx - p.x, my - p.y);
+    if (d < 30) {
+      const topic = this._nodes[i];
+      handleChatNav();
+      setTimeout(() => {
+        document.getElementById('chat-input').value = `O que você sabe sobre "${topic}" no contexto de design decolonial e saberes ancestrais?`;
+        document.getElementById('chat-input').focus();
+      }, 200);
+    }
+  });
+});
+
+// ── NOVO ESTUDO (SYNTHESIS) ──
+function createNewStudy() {
+  const modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(24,42,29,0.5);z-index:400;display:flex;align-items:center;justify-content:center;padding:1rem';
+  modal.innerHTML = `
+    <div style="background:#FDFBF7;border-radius:28px;padding:2.5rem;max-width:480px;width:100%;box-shadow:0 24px 80px rgba(24,42,29,0.2)">
+      <h3 style="font-family:'Hanken Grotesk';font-size:20px;font-weight:600;color:#182a1d;margin-bottom:1.5rem">Novo Estudo</h3>
+      <label style="font-family:Inter;font-size:12px;color:#737872;display:block;margin-bottom:4px">Título</label>
+      <input id="new-study-title" type="text" placeholder="Ex: Encontro 2 — Cartografia ancestral" style="width:100%;padding:12px 16px;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:14px;background:#fff;outline:none;margin-bottom:1rem;color:#1b1c1a;box-sizing:border-box">
+      <label style="font-family:Inter;font-size:12px;color:#737872;display:block;margin-bottom:4px">Subtítulo</label>
+      <input id="new-study-sub" type="text" placeholder="Ex: Metodologias de campo não-extrativistas" style="width:100%;padding:12px 16px;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:14px;background:#fff;outline:none;margin-bottom:1rem;color:#1b1c1a;box-sizing:border-box">
+      <label style="font-family:Inter;font-size:12px;color:#737872;display:block;margin-bottom:4px">Tag</label>
+      <select id="new-study-tag" style="width:100%;padding:10px 16px;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:14px;background:#fff;color:#1b1c1a;outline:none;margin-bottom:1.5rem">
+        <option>Design Decolonial</option>
+        <option>Pesquisa de Campo</option>
+        <option>Saberes Ancestrais</option>
+        <option>Artefato Especulativo</option>
+        <option>Cartografia</option>
+      </select>
+      <div style="display:flex;gap:10px">
+        <button onclick="saveNewStudy(this)" style="flex:1;padding:12px;background:#182a1d;color:#fff;border:none;border-radius:12px;font-family:Inter;font-size:14px;font-weight:500;cursor:pointer">Criar estudo</button>
+        <button onclick="this.closest('[style*=fixed]').remove()" style="padding:12px 20px;background:transparent;border:1px solid #c3c8c1;border-radius:12px;font-family:Inter;font-size:14px;cursor:pointer;color:#434843">Cancelar</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+  setTimeout(() => document.getElementById('new-study-title')?.focus(), 100);
+}
+
+function renderSynthesisList() {
+  const studies = JSON.parse(localStorage.getItem('ethos_studies') || '[]');
+  const list = document.getElementById('synthesis-list');
+  const empty = document.getElementById('synthesis-empty');
+  list.innerHTML = '';
+
+  if (studies.length === 0) {
+    empty.style.display = 'flex';
+    empty.style.removeProperty('display'); // remove !important override
+    empty.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem;text-align:center';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const bgColors = ['bg-primary-container','bg-secondary-container','bg-tertiary-container','bg-surface-container-high'];
+  const textColors = ['text-on-primary-container','text-on-secondary-container','text-tertiary-fixed-dim','text-on-surface-variant'];
+
+  studies.forEach((study, i) => {
+    const bg = bgColors[i % bgColors.length];
+    const tc = textColors[i % textColors.length];
+    const date = new Date(study.createdAt).toLocaleDateString('pt-BR', { day:'2-digit', month:'short' });
+    const card = document.createElement('div');
+    card.id = 'study-card-' + study.id;
+    card.className = 'bg-white rounded-2xl p-5 border border-surface-container-high flex items-center gap-5 hover:shadow-md transition-all cursor-pointer group';
+    card.onclick = () => openSynthesisDetail(study.id);
+    card.innerHTML = `
+      <div class="w-12 h-12 rounded-xl ${bg} flex items-center justify-center ${tc} flex-shrink-0">
+        <span class="material-symbols-outlined text-[22px]">${study.icon || 'hub'}</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="font-label-md text-primary font-semibold truncate">${study.title}</p>
+        <p class="font-label-sm text-on-surface-variant mt-0.5 truncate">${study.sub || 'Em construção'}</p>
+      </div>
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <span class="px-2.5 py-1 bg-surface-container-high text-on-surface-variant rounded-full font-label-sm text-[11px]">${study.tag}</span>
+        <span class="font-label-sm text-[11px] text-on-surface-variant opacity-60">${date}</span>
+        <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+function saveNewStudy(btn) {
+  const title = document.getElementById('new-study-title').value.trim();
+  const sub = document.getElementById('new-study-sub').value.trim();
+  const tag = document.getElementById('new-study-tag').value;
+  if (!title) return;
+
+  const id = 'study_' + Date.now();
+  const icons = {'Design Decolonial':'eco','Pesquisa de Campo':'travel_explore','Saberes Ancestrais':'history_edu','Artefato Especulativo':'science','Cartografia':'map'};
+  const icon = icons[tag] || 'hub';
+
+  const studies = JSON.parse(localStorage.getItem('ethos_studies') || '[]');
+  studies.push({ id, title, sub, tag, icon, createdAt: Date.now() });
+  localStorage.setItem('ethos_studies', JSON.stringify(studies));
+
+  btn.closest('[style*=fixed]').remove();
+  renderSynthesisList();
+  showToast('✓ Estudo criado');
+}
+
+// ── INIT ──
+setView('chat');
+renderHistoryList();
+initAuth();
+// update badge on load
+const _badge = document.getElementById('hist-count');
+if (allConversations.length > 0) { _badge.textContent = allConversations.length; _badge.style.display = 'inline'; }
+</script>
+</body>
+</html>
