@@ -32,7 +32,7 @@ function initSidebar(activePage) {
         <div class="user-avatar w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-label-md font-bold flex-shrink-0 overflow-hidden">MA</div>
         <div class="overflow-hidden flex-1">
           <p class="user-name font-label-md text-label-md truncate text-primary">Maria Luíza</p>
-          <p class="font-label-sm text-label-sm text-on-surface-variant opacity-70">Pesquisadora</p>
+          <p class="font-label-sm text-label-sm text-on-surface-variant opacity-70">Pesquisador(a)</p>
         </div>
         <button onclick="signOut()" title="Sair" class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-error transition-colors flex-shrink-0">
           <span class="material-symbols-outlined text-[18px]">logout</span>
