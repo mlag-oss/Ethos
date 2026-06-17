@@ -168,52 +168,44 @@ async function generateStudySynthesis(studyId) {
 
   const allConvs = JSON.parse(localStorage.getItem('ethos_conversations') || '[]');
 
-  // Filter conversations by relevance to this study's title/tag
-  const titleWords = (study.title + ' ' + study.tag).toLowerCase().split(/\s+/).filter(w => w.length > 3);
-  const relevantConvs = allConvs.filter(conv => {
-    const text = (conv.messages || []).map(m => m.parts?.[0]?.text || m.content || '').join(' ').toLowerCase();
-    return titleWords.some(w => text.includes(w));
-  });
-  const convPool = relevantConvs.length > 0 ? relevantConvs : allConvs;
-  const conversationText = convPool.map(conv => {
-    const msgs = (conv.messages || [])
-      .map(m => `${m.role === 'user' ? 'Pesquisador' : 'Ethos AI'}: ${m.content || m.parts?.[0]?.text || ''}`)
-      .join('\n');
-    return `Conversa "${conv.title || 'Sem título'}":\n${msgs}`;
-  }).join('\n\n---\n\n');
+  if (allConvs.length === 0) {
+    if (area) area.innerHTML = `
+      <div class="bg-white rounded-[28px] p-8 border border-surface-container-high text-center shadow-sm">
+        <span class="material-symbols-outlined text-[40px] text-on-surface-variant opacity-30 mb-4 block">find_in_page</span>
+        <p class="text-primary font-semibold mb-2">Nenhuma conversa ainda</p>
+        <p class="text-on-surface-variant text-sm mb-5">Explore este tema no chat para gerar uma síntese baseada nas suas pesquisas.</p>
+        <button onclick="location.href='/chat'" class="px-5 py-2.5 bg-primary text-white rounded-xl text-sm">Explorar no chat →</button>
+      </div>`;
+    return;
+  }
 
-  const hasConversations = conversationText.trim().length > 0;
-  const prompt = hasConversations
-    ? `Você é um assistente de síntese de pesquisa especulativa em design decolonial.
+  const conversationText = allConvs.map(conv => {
+    const msgs = (conv.messages || [])
+      .map(m => `${m.role === 'user' ? 'Pesquisador' : 'Ethos AI'}: ${m.parts?.[0]?.text || m.content || ''}`)
+      .join('\n');
+    return `=== Conversa: "${conv.title || 'Sem título'}" ===\n${msgs}`;
+  }).join('\n\n');
+
+  const prompt = `Você é um assistente de síntese de pesquisa em design decolonial.
 
 O estudo se chama: "${study.title}" (categoria: ${study.tag})
 
-Com base EXCLUSIVAMENTE nas conversas abaixo e no tema específico "${study.title}", gere uma síntese personalizada:
-1. Um parágrafo de síntese (4-6 frases) que conecta as descobertas ao tema "${study.title}" especificamente
-2. Exatamente 3 insights provocativos (1-2 frases cada) únicos para este estudo
-3. Uma lista de exatamente 5 conceitos-chave diretamente relacionados a "${study.title}"
+Abaixo estão TODAS as conversas da pesquisadora. Sua tarefa:
+1. Identifique trechos e ideias das conversas que se relacionam com "${study.title}"
+2. Com base nesses trechos reais, gere uma síntese personalizada e específica
 
-Responda APENAS com JSON válido:
-{"summary":"...","insights":["...","...","..."],"nodes":["conceito1","conceito2","conceito3","conceito4","conceito5"]}
-
-Conversas relevantes:
-${conversationText.slice(0, 8000)}`
-    : `Você é um assistente de pesquisa especulativa em design decolonial.
-
-Crie uma síntese profunda e original para o estudo intitulado "${study.title}" (categoria: ${study.tag}).
-
-Esta síntese deve ser completamente única e específica para este título. Explore:
-- O que "${study.title}" implica no contexto de design decolonial e saberes ancestrais
-- Tensões e contradições inerentes ao tema
-- Caminhos metodológicos e epistêmicos específicos a este estudo
+Se as conversas não abordarem diretamente "${study.title}", indique isso claramente no summary.
 
 Gere:
-1. Um parágrafo de síntese (4-6 frases) profundo e específico a "${study.title}"
-2. Exatamente 3 insights provocativos e originais sobre este tema específico
-3. Exatamente 5 conceitos-chave únicos deste estudo
+- summary: parágrafo de 4-6 frases baseado no que foi REALMENTE discutido, conectando ao tema "${study.title}"
+- insights: exatamente 3 insights extraídos das conversas (não genéricos)
+- nodes: exatamente 5 conceitos que EMERGIRAM das conversas em relação a "${study.title}"
 
-Responda APENAS com JSON:
-{"summary":"...","insights":["...","...","..."],"nodes":["...","...","...","...","..."]}`;
+Responda APENAS com JSON válido:
+{"summary":"...","insights":["...","...","..."],"nodes":["...","...","...","...","..."]}
+
+Conversas:
+${conversationText.slice(0, 10000)}`;
 
   try {
     const { url, headers } = buildGeminiRequest();
