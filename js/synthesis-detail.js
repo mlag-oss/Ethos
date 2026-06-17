@@ -198,7 +198,7 @@ Responda APENAS com JSON: {"summary":"...","insights":["...","...","..."],"nodes
         model: GEMINI_MODEL,
         body: {
           contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.75, maxOutputTokens: 900 }
+          generationConfig: { temperature: 0.75, maxOutputTokens: 2000 }
         }
       })
     });

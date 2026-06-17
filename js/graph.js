@@ -164,7 +164,16 @@ function initGraphPage() {
       const d = Math.hypot(mx - p.x, my - p.y);
       if (d < 30) {
         const topic = this._nodes[i];
-        sessionStorage.setItem('ethos_chat_topic', `O que você sabe sobre "${topic}" no contexto de design decolonial e saberes ancestrais?`);
+        const perguntas = [
+          `Quero explorar "${topic}" com profundidade. Que tensões ou contradições você enxerga nesse conceito dentro do design decolonial?`,
+          `"${topic}" emergiu bastante nas minhas pesquisas. O que eu ainda não estou perguntando sobre esse tema?`,
+          `Como abordar "${topic}" de forma não-extrativista em um projeto com comunidades tradicionais?`,
+          `O que significa "${topic}" a partir de uma perspectiva ancestral e territorial, e não ocidental?`,
+          `Que saberes práticos e relacionais existem em torno de "${topic}" que escapam da abordagem acadêmica convencional?`,
+        ];
+        const q = perguntas[Math.floor(Math.random() * perguntas.length)];
+        sessionStorage.setItem('ethos_chat_topic', q);
+        sessionStorage.setItem('ethos_chat_autosend', '1');
         location.href = '/chat';
       }
     });

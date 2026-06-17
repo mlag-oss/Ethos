@@ -382,10 +382,12 @@ function initChatPage() {
   const topic = sessionStorage.getItem('ethos_chat_topic');
   if (topic) {
     sessionStorage.removeItem('ethos_chat_topic');
+    const autoSend = sessionStorage.getItem('ethos_chat_autosend');
+    sessionStorage.removeItem('ethos_chat_autosend');
     setTimeout(() => {
       document.getElementById('chat-input').value = topic;
-      document.getElementById('chat-input').focus();
-    }, 300);
+      if (autoSend) { sendMessage(); } else { document.getElementById('chat-input').focus(); }
+    }, 600);
   }
 
   // Mobile: show history drawer when clicking "Conversas" nav
