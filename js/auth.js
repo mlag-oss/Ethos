@@ -59,7 +59,8 @@ function initLoginPage() {
 
 function handleGoogleCredential(response) {
   try {
-    const payload = JSON.parse(atob(response.credential.split('.')[1]));
+    const base64 = response.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    const payload = JSON.parse(decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
     currentUser = { name: payload.name, email: payload.email, picture: payload.picture || '', sub: payload.sub };
     localStorage.setItem('ethos_user', JSON.stringify(currentUser));
     location.href = '/chat';
