@@ -250,13 +250,18 @@ Responda APENAS com JSON:
     }
   } catch(e) {
     console.error('Synthesis error:', e);
+    const isTopicMissing = e.message?.includes('JSON') || e.message?.includes('vazia');
     if (area) area.innerHTML = `
       <div class="bg-white rounded-[28px] p-8 border border-surface-container-high text-center shadow-sm">
-        <p class="text-error mb-2 font-semibold">Erro ao gerar síntese</p>
-        <p class="text-on-surface-variant text-sm mb-5">${e.message}</p>
-        <button onclick="generateStudySynthesis('${studyId}')" class="px-5 py-2.5 bg-primary text-white rounded-xl text-sm">Tentar novamente</button>
+        <span class="material-symbols-outlined text-[40px] text-on-surface-variant opacity-30 mb-4 block">${isTopicMissing ? 'find_in_page' : 'error'}</span>
+        <p class="text-primary font-semibold mb-2">${isTopicMissing ? 'Tema ainda não abordado' : 'Erro ao gerar síntese'}</p>
+        <p class="text-on-surface-variant text-sm mb-5">${isTopicMissing ? 'Este tema não aparece nas suas conversas ainda. Explore-o no chat para gerar uma síntese.' : e.message}</p>
+        ${isTopicMissing
+          ? `<button onclick="location.href='/chat'" class="px-5 py-2.5 bg-primary text-white rounded-xl text-sm">Explorar no chat →</button>`
+          : `<button onclick="generateStudySynthesis('${studyId}')" class="px-5 py-2.5 bg-primary text-white rounded-xl text-sm">Tentar novamente</button>`
+        }
       </div>`;
-    showToast('Erro ao gerar síntese');
+    showToast(isTopicMissing ? 'Tema não abordado ainda' : 'Erro ao gerar síntese');
   }
 }
 
