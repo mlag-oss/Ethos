@@ -167,7 +167,15 @@ async function generateStudySynthesis(studyId) {
     </div>`;
 
   const allConvs = JSON.parse(localStorage.getItem('ethos_conversations') || '[]');
-  const conversationText = allConvs.map(conv => {
+
+  // Filter conversations by relevance to this study's title/tag
+  const titleWords = (study.title + ' ' + study.tag).toLowerCase().split(/\s+/).filter(w => w.length > 3);
+  const relevantConvs = allConvs.filter(conv => {
+    const text = (conv.messages || []).map(m => m.parts?.[0]?.text || m.content || '').join(' ').toLowerCase();
+    return titleWords.some(w => text.includes(w));
+  });
+  const convPool = relevantConvs.length > 0 ? relevantConvs : allConvs;
+  const conversationText = convPool.map(conv => {
     const msgs = (conv.messages || [])
       .map(m => `${m.role === 'user' ? 'Pesquisador' : 'Ethos AI'}: ${m.content || m.parts?.[0]?.text || ''}`)
       .join('\n');
@@ -176,19 +184,36 @@ async function generateStudySynthesis(studyId) {
 
   const hasConversations = conversationText.trim().length > 0;
   const prompt = hasConversations
-    ? `Você é um assistente de síntese de pesquisa especulativa. Com base nas conversas abaixo do projeto "${study.title}" (categoria: ${study.tag}), gere:
-1. Um parágrafo de síntese (4-6 frases) descrevendo os temas centrais, descobertas e conexões emergentes
-2. Exatamente 3 insights curtos (1-2 frases cada) que revelam padrões, tensões ou oportunidades
-3. Uma lista de exatamente 5 conceitos-chave (substantivos simples)
+    ? `Você é um assistente de síntese de pesquisa especulativa em design decolonial.
 
-Responda APENAS com JSON válido neste formato:
+O estudo se chama: "${study.title}" (categoria: ${study.tag})
+
+Com base EXCLUSIVAMENTE nas conversas abaixo e no tema específico "${study.title}", gere uma síntese personalizada:
+1. Um parágrafo de síntese (4-6 frases) que conecta as descobertas ao tema "${study.title}" especificamente
+2. Exatamente 3 insights provocativos (1-2 frases cada) únicos para este estudo
+3. Uma lista de exatamente 5 conceitos-chave diretamente relacionados a "${study.title}"
+
+Responda APENAS com JSON válido:
 {"summary":"...","insights":["...","...","..."],"nodes":["conceito1","conceito2","conceito3","conceito4","conceito5"]}
 
-Conversas:
+Conversas relevantes:
 ${conversationText.slice(0, 8000)}`
-    : `Crie uma síntese inicial especulativa para o estudo "${study.title}" sobre "${study.tag}".
-Gere: parágrafo de síntese (3-4 frases), 3 insights provocativos (1-2 frases cada), 5 conceitos centrais.
-Responda APENAS com JSON: {"summary":"...","insights":["...","...","..."],"nodes":["...","...","...","...","..."]}`;
+    : `Você é um assistente de pesquisa especulativa em design decolonial.
+
+Crie uma síntese profunda e original para o estudo intitulado "${study.title}" (categoria: ${study.tag}).
+
+Esta síntese deve ser completamente única e específica para este título. Explore:
+- O que "${study.title}" implica no contexto de design decolonial e saberes ancestrais
+- Tensões e contradições inerentes ao tema
+- Caminhos metodológicos e epistêmicos específicos a este estudo
+
+Gere:
+1. Um parágrafo de síntese (4-6 frases) profundo e específico a "${study.title}"
+2. Exatamente 3 insights provocativos e originais sobre este tema específico
+3. Exatamente 5 conceitos-chave únicos deste estudo
+
+Responda APENAS com JSON:
+{"summary":"...","insights":["...","...","..."],"nodes":["...","...","...","...","..."]}`;
 
   try {
     const { url, headers } = buildGeminiRequest();
